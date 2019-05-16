@@ -98,17 +98,4 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return super.preHandle(request, response);
     }
 
-
-    /**
-     * 将非法请求跳转到
-     */
-    private void responseError(ServletRequest req, ServletResponse resp,String errormsg) {
-        try {
-            errormsg = URLEncoder.encode(errormsg,"utf-8");
-            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/unauthorized?errormsg="+errormsg);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-    }
 }
