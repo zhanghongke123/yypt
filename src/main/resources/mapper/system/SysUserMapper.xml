@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwsj.yypt.system.dao.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.zwsj.yypt.system.domain.SysUser">
+        <id column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="mobile" jdbcType="INTEGER" property="mobile" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="roleNames" jdbcType="VARCHAR" property="roleNames" />
+        <result column="roleIds" jdbcType="VARCHAR" property="roleIds" />
+    </resultMap>
+
+    <select id="findUserDetail" resultMap="BaseResultMap" parameterType="sysuser">
+            SELECT
+                a.user_id,
+                a.user_name,
+                a.avatar,
+                a.create_date,
+                a.mobile,
+                a.modify_date,
+                a.user_password,
+                GROUP_CONCAT(DISTINCT c.role_name) roleNames,
+                GROUP_CONCAT(DISTINCT c.role_id) roleIds
+            FROM
+                USER a
+            LEFT JOIN role_user b ON (a.user_id = b.user_id)
+            LEFT JOIN role c ON (b.role_id = c.role_id)
+            WHERE 1 = 1
+            GROUP BY
+                a.user_id,
+                a.user_name,
+                a.avatar,
+                a.create_date,
+                a.mobile,
+                a.modify_date,
+                a.user_password
+    </select>
+
+
+
+
+
+</mapper>

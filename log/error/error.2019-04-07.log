@@ -1,0 +1,118 @@
+2019-04-07 12:55:30.216 febs [http-nio-8099-exec-10] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.IllegalStateException: Cannot call sendError() after the response has been committed] with root cause
+java.lang.IllegalStateException: Cannot call sendError() after the response has been committed
+	at org.apache.catalina.connector.ResponseFacade.sendError(ResponseFacade.java:472)
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:454)
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:53)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1038)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.shiro.web.servlet.ProxiedFilterChain.doFilter(ProxiedFilterChain.java:61)
+	at org.apache.shiro.web.servlet.AdviceFilter.executeChain(AdviceFilter.java:108)
+	at org.apache.shiro.web.servlet.AdviceFilter.doFilterInternal(AdviceFilter.java:137)
+	at org.apache.shiro.web.servlet.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:125)
+	at org.apache.shiro.web.servlet.ProxiedFilterChain.doFilter(ProxiedFilterChain.java:66)
+	at org.apache.shiro.web.servlet.AbstractShiroFilter.executeChain(AbstractShiroFilter.java:449)
+	at org.apache.shiro.web.servlet.AbstractShiroFilter$1.call(AbstractShiroFilter.java:365)
+	at org.apache.shiro.subject.support.SubjectCallable.doCall(SubjectCallable.java:90)
+	at org.apache.shiro.subject.support.SubjectCallable.call(SubjectCallable.java:83)
+	at org.apache.shiro.subject.support.DelegatingSubject.execute(DelegatingSubject.java:383)
+	at org.apache.shiro.web.servlet.AbstractShiroFilter.doFilterInternal(AbstractShiroFilter.java:362)
+	at org.apache.shiro.web.servlet.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:125)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:200)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:834)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1415)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+2019-04-07 12:57:52.765 febs [http-nio-8099-exec-9] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 13:00:37.339 febs [http-nio-8099-exec-6] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 13:29:15.912 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 15:19:31.890 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 15:29:13.301 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:29:20.617 febs [http-nio-8099-exec-9] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:29:20.625 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:07.179 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:07.187 febs [http-nio-8099-exec-7] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:09.246 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:09.252 febs [http-nio-8099-exec-1] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:10.558 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:10.567 febs [http-nio-8099-exec-3] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:13.551 febs [http-nio-8099-exec-6] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:13.554 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:22.309 febs [http-nio-8099-exec-9] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:22.316 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:25.196 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:25.200 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:26.750 febs [http-nio-8099-exec-10] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:30:26.755 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:02.830 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:02.834 febs [http-nio-8099-exec-7] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:05.152 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:05.161 febs [http-nio-8099-exec-9] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:08.689 febs [http-nio-8099-exec-7] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:08.693 febs [http-nio-8099-exec-10] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:14.665 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:14.679 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:16.300 febs [http-nio-8099-exec-10] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:16.340 febs [http-nio-8099-exec-3] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:18.518 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 16:31:18.522 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:08.813 febs [http-nio-8099-exec-3] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:08.893 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:17.440 febs [http-nio-8099-exec-1] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:17.444 febs [http-nio-8099-exec-3] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:31.883 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:31.890 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:34.024 febs [http-nio-8099-exec-3] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:02:34.029 febs [http-nio-8099-exec-7] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:28.884 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:28.890 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:32.469 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:32.473 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:34.204 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:34.209 febs [http-nio-8099-exec-9] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:35.887 febs [http-nio-8099-exec-5] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:05:35.892 febs [http-nio-8099-exec-1] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:06:13.614 febs [http-nio-8099-exec-9] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:06:13.618 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:11:34.287 febs [http-nio-8099-exec-7] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 19:11:34.294 febs [http-nio-8099-exec-8] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 22:44:55.176 febs [http-nio-8099-exec-2] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期
+2019-04-07 22:44:55.182 febs [http-nio-8099-exec-4] ERROR c.z.y.common.handler.ExceptionAdvice - 系统错误：token已经过期

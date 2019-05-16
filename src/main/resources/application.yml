@@ -1,0 +1,74 @@
+spring:
+  redis:
+      database: 2
+      host: 47.104.194.125
+      port: 6379
+      password: osgc1326!
+      jedis:
+        pool:
+          min-idle: 8
+          max-idle: 500
+          max-active: 2000
+          max-wait: 200000
+          timeout: 0
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useAffectedRows=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      connection-test-query: select 1
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: YyptHikariCP
+
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*/*.xml
+  type-aliases-package: com.zwsj.yypt.system.domain
+  configuration:
+    jdbc-type-for-null: null
+
+mapper:
+  mappers:
+    - com.zwsj.yypt.common.config.MyMapper
+  notEmpty: true
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
+
+yypt:
+  showsql: true
+  openAopLog: true
+  max:
+    batch:
+      insert:
+        num: 1000
+  shiro:
+    anonUrl: /login/**,/user/check/**,/unauthorized/**
+    jwtTimeOut: 3600
+
+
+#pagehelper分页插件配置
+server:
+  port: 8099
+  error:
+    whitelabel:
+      enabled: false
+
+
+
+
