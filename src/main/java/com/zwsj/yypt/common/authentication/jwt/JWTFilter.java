@@ -2,6 +2,9 @@ package com.zwsj.yypt.common.authentication.jwt;
 
 
 
+import com.alibaba.fastjson.JSON;
+import com.zwsj.yypt.common.domain.YyptResponse;
+import com.zwsj.yypt.common.enums.ResultEnum;
 import com.zwsj.yypt.common.properties.YyptProperties;
 import com.zwsj.yypt.common.utils.SpringContextUtil;
 import com.zwsj.yypt.common.utils.YyptUtils;
@@ -17,6 +20,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 
 @Slf4j
@@ -44,8 +48,17 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             try {
                 executeLogin(request, response);
             }catch (Exception e){
-                //异常跳转至401
-                responseError(request, response,e.getMessage());
+                try {
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    YyptResponse fastWebResponse = YyptResponse.failure(ResultEnum.TOKEN_ERROR,e.getMessage());
+                    out.println(JSON.toJSONString(fastWebResponse));
+                    out.flush();
+                    out.close();
+                }catch (Exception e1){
+                    log.error("Token验证时失败{}",e1);
+                }
             }
         }
         return true;
