@@ -31,7 +31,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
+    protected  boolean onAccessDenied(ServletRequest request, ServletResponse response)  {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         YyptProperties properties = SpringContextUtil.getBean(YyptProperties.class);
         String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getShiro().getAnonUrl(), ",");
