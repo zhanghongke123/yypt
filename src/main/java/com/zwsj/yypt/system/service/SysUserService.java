@@ -28,13 +28,8 @@ public interface SysUserService extends IService<SysUser> {
     List<SysRole> getUserRoles(Long  userId);
 
 
-    /**
-     * 获取用户的详细信息
-     * @param sysUser
-     * @param request
-     * @return
-     */
-    List<SysUser> findUserDetail(SysUser sysUser,QueryRequest request);
+
+    List<SysUser> list(SysUser sysUser,QueryRequest request);
 
 
     SysUser addUser(SysUser sysUser);

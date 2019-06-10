@@ -1,6 +1,6 @@
 package com.zwsj.yypt.system.dao;
 
-import com.zwsj.yypt.common.config.MyMapper;
+import com.zwsj.yypt.common.config.YyptMapper;
 import com.zwsj.yypt.system.domain.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,8 +12,8 @@ import java.util.List;
  * @描述
  */
 @Mapper
-public interface SysUserMapper extends MyMapper<SysUser> {
+public interface SysUserMapper extends YyptMapper<SysUser> {
 
-    List<SysUser> findUserDetail(SysUser sysUser);
+    List<SysUser> list(SysUser sysUser);
 
 }

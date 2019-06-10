@@ -18,6 +18,7 @@ import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysUserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -98,9 +99,9 @@ public class LoginController {
     }
 
 
-    @GetMapping("/login/getUserInfo")
+    @GetMapping("/getUserInfo")
     public YyptResponse getUserRoles(HttpServletRequest request) throws Exception{
-        SysUser sysUser = YyptUtils.getUserByToken(request);
+        SysUser sysUser = YyptUtils.getUserByRequest(request);
         List<SysRole> roleList =  sysUserService.getUserRoles(sysUser.getUserId());
         sysUser.setRoleList(roleList);
         Map<String,Object> data = new HashMap<>();
@@ -109,7 +110,6 @@ public class LoginController {
         cacheService.saveTokenUser(request.getHeader(JWTFilter.TOKEN),sysUser);
         return YyptResponse.success(data);
     }
-
 
     @GetMapping("/login/getMenu/{roleId}")
     public YyptResponse getUserRoles(@PathVariable(name = "roleId") String roleId,
@@ -171,9 +171,9 @@ public class LoginController {
         String username = user.getUserName();
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("token", token.getToken());
-        userInfo.put("exipreTime", token.getExipreAt());
+        userInfo.put("exipretime", token.getExipreAt());
         user.setUserPassword("******");
-        userInfo.put("user", user);
+        userInfo.put("userinfo", user);
         return userInfo;
     }
 

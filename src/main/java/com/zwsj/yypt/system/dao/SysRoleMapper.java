@@ -1,6 +1,6 @@
 package com.zwsj.yypt.system.dao;
 
-import com.zwsj.yypt.common.config.MyMapper;
+import com.zwsj.yypt.common.config.YyptMapper;
 import com.zwsj.yypt.system.domain.SysMenu;
 import com.zwsj.yypt.system.domain.SysRole;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,7 @@ import java.util.List;
  * @描述
  */
 @Mapper
-public interface SysRoleMapper extends MyMapper<SysRole> {
+public interface SysRoleMapper extends YyptMapper<SysRole> {
 
 
 

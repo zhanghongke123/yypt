@@ -55,7 +55,7 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
     }
 
     @Override
-    public List<SysUser> findUserDetail(SysUser sysUser, QueryRequest request) {
+    public List<SysUser> list(SysUser sysUser, QueryRequest request) {
         try {
             if (request.getSortField() != null) {
                 sysUser.setSortField(request.getSortField());
@@ -64,7 +64,7 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
                 else if (StringUtils.equals(YyptConstant.ORDER_DESC, request.getSortOrder()))
                     sysUser.setSortOrder("desc");
             }
-            return sysUserMapper.findUserDetail(sysUser);
+            return sysUserMapper.list(sysUser);
         } catch (Exception e) {
             log.error("查询用户异常", e);
             return new ArrayList<>();

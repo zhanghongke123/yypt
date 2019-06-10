@@ -61,12 +61,31 @@ public class YyptUtils {
 
 
     /**
-     * 通过token获取对用的用户信息
+     * 通过Request获取对用的用户信息
      * @param request
      * @return
      */
-    public static SysUser getUserByToken(HttpServletRequest request) throws Exception {
+    public static SysUser getUserByRequest(HttpServletRequest request) throws Exception {
         String token = request.getHeader(JWTFilter.TOKEN);
+        if(StringUtils.isBlank(token)){
+            throw new TokenExpiredException("Token已过期");
+        }
+        RedisService redisService = SpringContextUtil.getBean(RedisService.class);
+        String userstr = redisService.get(YyptConstant.USER_TOKEN_CACHE_PREFIX + token);
+        if(StringUtils.isBlank(userstr)){
+            throw  new YyptException("redis获取用户信息失败");
+        }
+        ObjectMapper mapper = SpringContextUtil.getBean(ObjectMapper.class);
+        return mapper.readValue(userstr,SysUser.class);
+    }
+
+
+    /**
+     * 通过token获取对用的用户信息
+     * @param token
+     * @return
+     */
+    public static SysUser getUserByRequest(String token) throws Exception {
         if(StringUtils.isBlank(token)){
             throw new TokenExpiredException("Token已过期");
         }

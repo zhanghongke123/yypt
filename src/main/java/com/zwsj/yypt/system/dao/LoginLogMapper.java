@@ -1,6 +1,6 @@
 package com.zwsj.yypt.system.dao;
 
-import com.zwsj.yypt.common.config.MyMapper;
+import com.zwsj.yypt.common.config.YyptMapper;
 import com.zwsj.yypt.system.domain.LoginLog;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @描述
  */
 @Mapper
-public interface LoginLogMapper extends MyMapper<LoginLog> {
+public interface LoginLogMapper extends YyptMapper<LoginLog> {
 }

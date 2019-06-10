@@ -1,9 +1,9 @@
 spring:
   redis:
-      database: 2
+      database: 5
       host: 47.104.194.125
       port: 6379
-      password: osgc1326!
+      password: *****
       jedis:
         pool:
           min-idle: 8
@@ -39,7 +39,7 @@ mybatis:
 
 mapper:
   mappers:
-    - com.zwsj.yypt.common.config.MyMapper
+    - com.zwsj.yypt.common.config.YyptMapper
   notEmpty: true
 
 pagehelper:
@@ -58,7 +58,7 @@ yypt:
       insert:
         num: 1000
   shiro:
-    anonUrl: /login/**,/user/check/**,/unauthorized/**
+    anonUrl: /login,/user/check/**,/unauthorized/**
     jwtTimeOut: 3600
 
 

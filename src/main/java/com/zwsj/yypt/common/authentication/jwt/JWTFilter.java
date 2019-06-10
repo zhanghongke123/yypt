@@ -21,12 +21,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 
 @Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
-    public static final String TOKEN = "Authentication";
+    public static final String TOKEN = "Authentication_TOKEN";
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
