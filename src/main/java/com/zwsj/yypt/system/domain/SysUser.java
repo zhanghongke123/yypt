@@ -1,10 +1,7 @@
 package com.zwsj.yypt.system.domain;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-
-import javax.annotation.PropertyKey;
-import javax.management.relation.RoleList;
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -14,58 +11,52 @@ import java.util.List;
  * @创建时间 2019-04-01
  * @描述
  */
-@Table(name = "user")
+@TableName("user")
 @Data
 public class SysUser {
-    @Id
-    @GeneratedValue(generator = "JDBC")
-    @Column(name = "user_id")
+
+
+    @TableId(value = "user_id",type = IdType.AUTO)
     private Long userId;
 
-    @Column(name = "user_name")
+    @TableField("user_name")
     @NotBlank
     private String userName;
 
-    @Column(name = "user_password")
+    @TableField("user_password")
     private String userPassword;
 
-    @Column(name = "avatar")
+    @TableField("avatar")
     private String avatar;
 
-    @Column(name = "mobile")
+    @TableField("mobile")
     private String mobile;
 
-    @Column(name = "create_date")
+    @TableField("create_date")
     private Date  createDate;
 
-    @Column(name = "modify_date")
+    @TableField("modify_date")
     private  Date modifyDate;
 
 
-    @Transient
-    private List<SysRole> roleList;
+    private transient List<SysRole> roleList;
 
 
-    @Transient
-    private String roleNames;
+    private transient String roleNames;
 
 
-    @Transient
-    private String roleIds;
+    private transient String roleIds;
 
 
     // 排序字段
-    @Transient
-    private String sortField;
+    private transient String sortField;
 
 
     // 排序规则 ascend 升序 descend 降序
-    @Transient
-    private String sortOrder;
+    private transient String sortOrder;
 
 
-    @Transient
-    private String id;
+    private  transient String id;
 
 
     /**

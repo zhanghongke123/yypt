@@ -1,8 +1,7 @@
 package com.zwsj.yypt.system.service;
 
-import com.zwsj.yypt.common.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zwsj.yypt.system.domain.LoginLog;
-import org.springframework.stereotype.Service;
 
 /**
  * @创建人 zhk

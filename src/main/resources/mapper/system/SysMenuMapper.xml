@@ -7,6 +7,7 @@
         <result column="component" jdbcType="VARCHAR" property="component" />
         <result column="parentid" jdbcType="INTEGER" property="parentid" />
         <result column="order_code" jdbcType="INTEGER" property="orderCode" />
+        <result column="type" jdbcType="INTEGER" property="type" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="icon" jdbcType="VARCHAR" property="icon" />
         <result column="permission" jdbcType="VARCHAR" property="permission" />
@@ -21,7 +22,15 @@
             role_menu a
         LEFT JOIN menu b ON a.menu_id = b.menu_id
         where a.role_id = #{roleId}
+        and b.type = 1
         order by  b.order_code desc
+    </select>
+    
+    
+    <select id="getAllMenu" resultMap="BaseResultMap">
+        select a.*
+         from menu a
+         where a.type = 1
     </select>
 
 

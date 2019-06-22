@@ -1,11 +1,11 @@
 package com.zwsj.yypt.system.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -13,20 +13,19 @@ import java.util.Date;
  * @创建时间 2019-04-01
  * @描述
  */
-@Table(name = "role_user")
+@TableName("role_user")
 @Data
 public class SysRoleUser {
-    @Id
-    @GeneratedValue(generator = "JDBC")
-    @Column(name = "role_user_id")
+
+    @TableId(value = "role_user_id", type = IdType.AUTO)
     private Long roleUserId;
 
-    @Column(name = "role_id")
+    @TableField("role_id")
     private Long roleId;
 
-    @Column(name = "user_id")
+    @TableField("role_id")
     private Long userId;
 
-    @Column(name = "create_date")
+    @TableField("role_id")
     private Date createDate;
 }

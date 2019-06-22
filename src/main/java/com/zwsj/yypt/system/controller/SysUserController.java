@@ -19,13 +19,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("user")
 @Validated
-public class SysUserController extends BaseController {
+public class SysUserController  {
     @Autowired
     private  SysUserService sysUserService;
 
 //    @GetMapping("list")
 //    public Map<String, Object> list(QueryRequest request, SysUser sysUser){
-//        Map<String, Object> data = super.selectByPageNumSize(request,() -> sysUserService.findUserDetail(sysUser,request));
+//        Map<String, Object> data = super.selectByPageNumSize(request,() -> sysUserService.list(sysUser,request));
 //        return YyptResponse.success(data);
 //    }
 

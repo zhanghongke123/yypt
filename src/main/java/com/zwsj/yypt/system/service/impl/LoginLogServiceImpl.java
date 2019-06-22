@@ -1,13 +1,13 @@
 package com.zwsj.yypt.system.service.impl;
 
 
-import com.zwsj.yypt.common.service.impl.BaseService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zwsj.yypt.common.utils.AddressUtil;
 import com.zwsj.yypt.common.utils.HttpContextUtil;
 import com.zwsj.yypt.common.utils.IPUtil;
+import com.zwsj.yypt.system.dao.LoginLogMapper;
 import com.zwsj.yypt.system.domain.LoginLog;
 import com.zwsj.yypt.system.service.LoginLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ import java.util.Date;
  * @描述
  */
 @Service
-public class LoginLogServiceImpl extends BaseService<LoginLog> implements LoginLogService {
+public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper,LoginLog> implements LoginLogService {
 
 
     @Override

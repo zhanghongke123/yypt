@@ -1,8 +1,12 @@
 package com.zwsj.yypt.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.base.Equivalence;
 import com.zwsj.yypt.common.domain.QueryRequest;
 import com.zwsj.yypt.common.properties.YyptConstant;
-import com.zwsj.yypt.common.service.impl.BaseService;
 import com.zwsj.yypt.common.utils.MD5Utils;
 import com.zwsj.yypt.system.dao.SysRoleMapper;
 import com.zwsj.yypt.system.dao.SysRoleUserMapper;
@@ -15,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -29,7 +31,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements SysUserService {
     @Autowired
     private  SysUserMapper sysUserMapper;
 
@@ -41,34 +43,34 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
 
     @Override
     public SysUser findByName(String userName) {
-        Example example = new Example(SysUser.class);
-        example.createCriteria().andCondition("user_name = ",userName);
-        List<SysUser> list =  this.selectByExample(example);
-        return list.isEmpty() ? null : list.get(0);
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>();
+        wrapper.eq("user_name",userName);
+        return this.baseMapper.selectOne(wrapper);
     }
-
 
 
     @Override
     public List<SysRole> getUserRoles(Long userId) {
-        return sysRoleMapper.getUserRoles(userId);
+        return this.sysRoleMapper.getUserRoles(userId);
     }
 
+
     @Override
-    public List<SysUser> list(SysUser sysUser, QueryRequest request) {
-        try {
-            if (request.getSortField() != null) {
-                sysUser.setSortField(request.getSortField());
-                if (StringUtils.equals(YyptConstant.ORDER_ASC, request.getSortOrder()))
-                    sysUser.setSortOrder("asc");
-                else if (StringUtils.equals(YyptConstant.ORDER_DESC, request.getSortOrder()))
-                    sysUser.setSortOrder("desc");
-            }
-            return sysUserMapper.list(sysUser);
-        } catch (Exception e) {
-            log.error("查询用户异常", e);
-            return new ArrayList<>();
-        }
+    public IPage<SysUser> list(SysUser sysUser, QueryRequest request) {
+//        try {
+//            if (request.getSortField() != null) {
+//                sysUser.setSortField(request.getSortField());
+//                if (StringUtils.equals(YyptConstant.ORDER_ASC, request.getSortOrder()))
+//                    sysUser.setSortOrder("asc");
+//                else if (StringUtils.equals(YyptConstant.ORDER_DESC, request.getSortOrder()))
+//                    sysUser.setSortOrder("desc");
+//            }
+//            return this.sysUserMapper.list(sysUser);
+//        } catch (Exception e) {
+//            log.error("查询用户异常", e);
+//            return new ArrayList<>();
+//        }
+    return null;
     }
 
     @Override

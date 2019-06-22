@@ -1,6 +1,7 @@
 package com.zwsj.yypt.common.utils;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zwsj.yypt.common.authentication.jwt.JWTFilter;
 import com.zwsj.yypt.common.exception.YyptException;
@@ -12,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.stream.IntStream;
 
 /**
  * @创建人 zhk
@@ -96,6 +98,30 @@ public class YyptUtils {
         }
         ObjectMapper mapper = SpringContextUtil.getBean(ObjectMapper.class);
         return mapper.readValue(userstr,SysUser.class);
+    }
+
+
+
+    /**
+     * 驼峰转下划线
+     *
+     * @param value 待转换值
+     * @return 结果
+     */
+    public static String camelToUnderscore(String value) {
+        if (StringUtils.isBlank(value))
+            return value;
+        String[] arr = StringUtils.splitByCharacterTypeCamelCase(value);
+        if (arr.length == 0)
+            return value;
+        StringBuilder result = new StringBuilder();
+        IntStream.range(0, arr.length).forEach(i -> {
+            if (i != arr.length - 1)
+                result.append(arr[i]).append(StringPool.UNDERSCORE);
+            else
+                result.append(arr[i]);
+        });
+        return StringUtils.lowerCase(result.toString());
     }
 
 

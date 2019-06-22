@@ -1,7 +1,6 @@
 package com.zwsj.yypt.common.utils;
 
 
-import com.zwsj.yypt.common.domain.Tree;
 import com.zwsj.yypt.common.domain.route.Meta;
 import com.zwsj.yypt.common.domain.route.RouteData;
 import com.zwsj.yypt.system.domain.SysMenu;
@@ -15,53 +14,8 @@ public class TreeUtil {
     protected TreeUtil() {
     }
 
-    private final static String TOP_NODE_ID = "0";
+    private final static Long TOP_NODE_ID = 0L;
 
-    /**
-     * 用于构建菜单或部门树
-     *
-     * @param nodes nodes
-     * @param <T>   <T>
-     * @return <T> Tree<T>
-     */
-    public static <T> Tree<T> build(List<Tree<T>> nodes) {
-        if (nodes == null) {
-            return null;
-        }
-        List<Tree<T>> topNodes = new ArrayList<>();
-        nodes.forEach(node -> {
-
-            String pid = node.getParentId();
-            if (pid == null || TOP_NODE_ID.equals(pid)) {
-                topNodes.add(node);
-                return;
-            }
-
-            for (Tree<T> n : nodes) {
-                String id = n.getId();
-                if (id != null && id.equals(pid)) {
-                    if (n.getChildren() == null)
-                        n.initChildren();
-                    n.getChildren().add(node);
-                    node.setHasParent(true);
-                    n.setHasChildren(true);
-                    n.setHasParent(true);
-                    return;
-                }
-            }
-            if (topNodes.isEmpty())
-                topNodes.add(node);
-        });
-
-        Tree<T> root = new Tree<>();
-        root.setId("0");
-        root.setParentId("");
-        root.setHasParent(false);
-        root.setHasChildren(true);
-        root.setChildren(topNodes);
-        root.setText("root");
-        return root;
-    }
 
 
 
@@ -86,15 +40,15 @@ public class TreeUtil {
         List<RouteData> topRoutes = new ArrayList<>();
         routeDataList.forEach(route -> {
 
-            String parentId = route.getParentid();
-            if (parentId == null || TOP_NODE_ID.equals(parentId)) {
+            Long parentId = route.getParentid();
+            if (parentId == null || TOP_NODE_ID == parentId) {
                 topRoutes.add(route);
                 return;
             }
 
             for (RouteData parent : routeDataList) {
-                String id = String.valueOf(parent.getId());
-                if (id != null && id.equals(parentId)) {
+                Long id = parent.getId();
+                if (id != null && id == parentId) {
                     if (parent.getChildren() == null){
                         parent.initChildren();
                     }
@@ -103,7 +57,6 @@ public class TreeUtil {
                 }
             }
         });
-
 
         return topRoutes;
     }

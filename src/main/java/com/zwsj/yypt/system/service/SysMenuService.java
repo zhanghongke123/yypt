@@ -1,6 +1,7 @@
 package com.zwsj.yypt.system.service;
 
-import com.zwsj.yypt.common.service.IService;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zwsj.yypt.system.domain.SysMenu;
 
 import java.util.List;
@@ -12,5 +13,7 @@ import java.util.List;
  */
 public interface SysMenuService extends IService<SysMenu> {
     List<SysMenu> getMenusByRoleId(Long roleId);
+
+    List<SysMenu> getMenutreeView();
 
 }

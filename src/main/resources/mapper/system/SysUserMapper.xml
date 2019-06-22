@@ -13,30 +13,8 @@
         <result column="roleIds" jdbcType="VARCHAR" property="roleIds" />
     </resultMap>
 
-    <select id="findUserDetail" resultMap="BaseResultMap" parameterType="sysuser">
-            SELECT
-                a.user_id,
-                a.user_name,
-                a.avatar,
-                a.create_date,
-                a.mobile,
-                a.modify_date,
-                a.user_password,
-                GROUP_CONCAT(DISTINCT c.role_name) roleNames,
-                GROUP_CONCAT(DISTINCT c.role_id) roleIds
-            FROM
-                USER a
-            LEFT JOIN role_user b ON (a.user_id = b.user_id)
-            LEFT JOIN role c ON (b.role_id = c.role_id)
-            WHERE 1 = 1
-            GROUP BY
-                a.user_id,
-                a.user_name,
-                a.avatar,
-                a.create_date,
-                a.mobile,
-                a.modify_date,
-                a.user_password
+    <select id="list" resultMap="BaseResultMap" parameterType="sysuser">
+
     </select>
 
 

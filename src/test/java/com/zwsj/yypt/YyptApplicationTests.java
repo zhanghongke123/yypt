@@ -122,12 +122,12 @@ public class YyptApplicationTests {
 
     @Test
     public void genRoute(){
-        List<RouteData> aa = TreeUtil.buildVueRouter(sysMenuMapper.selectAll());
-        try {
-            System.out.println("........"+objectMapper.writeValueAsString(aa));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+//        List<RouteData> aa = TreeUtil.buildVueRouter(sysMenuMapper.);
+//        try {
+//            System.out.println("........"+objectMapper.writeValueAsString(aa));
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

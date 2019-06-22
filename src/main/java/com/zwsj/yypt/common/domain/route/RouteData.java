@@ -17,7 +17,7 @@ public class RouteData {
     private String name;
     private String redirect;
     private Meta meta;
-    private String parentid;
+    private Long parentid;
     private Long id;
     private List<RouteData> children;
 

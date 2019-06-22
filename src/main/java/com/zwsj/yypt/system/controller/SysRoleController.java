@@ -23,9 +23,9 @@ public class SysRoleController {
     @Autowired
     SysRoleMapper sysRoleMapper;
 
-    @GetMapping("list")
-    public YyptResponse getAllRoles(){
-       List<SysRole> data =  sysRoleMapper.selectAll();
-       return YyptResponse.success(data);
-    }
+//    @GetMapping("list")
+//    public YyptResponse getAllRoles(){
+//       List<SysRole> data =  sysRoleMapper.
+//       return YyptResponse.success(data);
+//    }
 }

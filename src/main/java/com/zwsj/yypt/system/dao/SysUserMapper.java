@@ -1,8 +1,7 @@
 package com.zwsj.yypt.system.dao;
 
-import com.zwsj.yypt.common.config.YyptMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zwsj.yypt.system.domain.SysUser;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,8 +10,7 @@ import java.util.List;
  * @创建时间 2019-04-01
  * @描述
  */
-@Mapper
-public interface SysUserMapper extends YyptMapper<SysUser> {
+public interface SysUserMapper extends BaseMapper<SysUser> {
 
     List<SysUser> list(SysUser sysUser);
 

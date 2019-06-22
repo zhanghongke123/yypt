@@ -1,9 +1,9 @@
 spring:
   redis:
-      database: 5
+      database: 3
       host: 47.104.194.125
       port: 6379
-      password: *****
+      password: osgc1326!
       jedis:
         pool:
           min-idle: 8
@@ -12,35 +12,51 @@ spring:
           max-wait: 200000
           timeout: 0
 
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useAffectedRows=true
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 15
-      connection-test-query: select 1
-      max-lifetime: 1800000
-      connection-timeout: 30000
-      pool-name: YyptHikariCP
-
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
 
-mybatis:
+
+  datasource:
+    dynamic:
+      p6spy: true
+      hikari:
+        minimum-idle: 5
+        maximum-pool-size: 15
+        connection-test-query: select 1
+        max-lifetime: 1800000
+        connection-timeout: 30000
+        pool-name: YyptHikariCP
+      # 配置默认数据源
+      primary: main
+      datasource:
+        main:
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+         # 数据源-2，名称为 test
+#        test:
+#           username: root
+#           password: 123456
+#           driver-class-name: com.mysql.cj.jdbc.Driver
+#           url: jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+
+
+
+
+#mybatis plus 设置
+mybatis-plus:
+  type-aliases-package: com.zwsj.yypt.*.domain
   mapper-locations: classpath:mapper/*/*.xml
-  type-aliases-package: com.zwsj.yypt.system.domain
   configuration:
     jdbc-type-for-null: null
+  global-config:
+    # 关闭 mybatis-plus的 banner
+    banner: false
 
-mapper:
-  mappers:
-    - com.zwsj.yypt.common.config.YyptMapper
-  notEmpty: true
 
 pagehelper:
   helperDialect: mysql
@@ -51,7 +67,6 @@ pagehelper:
 
 
 yypt:
-  showsql: true
   openAopLog: true
   max:
     batch:
