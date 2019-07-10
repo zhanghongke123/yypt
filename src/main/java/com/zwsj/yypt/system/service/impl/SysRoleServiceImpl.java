@@ -2,7 +2,9 @@ package com.zwsj.yypt.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zwsj.yypt.system.dao.SysRoleMapper;
+import com.zwsj.yypt.system.domain.SysMenu;
 import com.zwsj.yypt.system.domain.SysRole;
+import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     @Override
     public List<SysRole> getRoleByUserId(Long userId) {
         return sysRoleMapper.getUserRoles(userId);
+    }
+
+    @Override
+    public List<SysRole> list(SysRole sysRole) {
+        List<SysRole> data = sysRoleMapper.list(sysRole);
+        return data;
     }
 
 

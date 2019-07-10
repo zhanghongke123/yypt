@@ -11,7 +11,7 @@ import java.util.List;
  * @创建时间 2019-04-01
  * @描述
  */
-@TableName("user")
+@TableName("sys_user")
 @Data
 public class SysUser {
 

@@ -7,15 +7,38 @@
             <result column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode" />
             <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
             <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+            <result column="menuids" jdbcType="VARCHAR" property="menuIds" />
     </resultMap>
 
     <select id="getUserRoles" resultMap="BaseResultMap" parameterType="long">
         SELECT
-            b.*
+            distinct  b.ROLE_ID,
+            b.ROLE_NAME,
+            b.ROLE_CODE
         FROM
-            role_user a
-        LEFT JOIN role b ON a.role_id = b.role_id
+            sys_role_user a
+        LEFT JOIN sys_role b ON a.role_id = b.role_id
         where a.user_id = #{userId}
+    </select>
+
+
+    <select id="list" resultMap="BaseResultMap" parameterType="SysRole">
+            SELECT
+                a.role_id,
+                a.role_name,
+                a.role_code,
+                a.create_date,
+                a.modify_date,
+                GROUP_CONCAT(b.menu_id) menuids
+            FROM
+                sys_role a
+            LEFT JOIN sys_role_menu b ON a.role_id = b.role_id
+            GROUP BY
+                a.role_id,
+                a.role_name,
+                a.role_code,
+                a.create_date,
+                a.modify_date
     </select>
     
     

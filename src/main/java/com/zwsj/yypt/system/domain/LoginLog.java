@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
-@TableName("web_login_log")
+@TableName("sys_web_login_log")
 @ToString
 @Data
 public class LoginLog {

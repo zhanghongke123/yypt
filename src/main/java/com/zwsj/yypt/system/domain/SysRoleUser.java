@@ -13,7 +13,7 @@ import java.util.Date;
  * @创建时间 2019-04-01
  * @描述
  */
-@TableName("role_user")
+@TableName("sys_role_user")
 @Data
 public class SysRoleUser {
 

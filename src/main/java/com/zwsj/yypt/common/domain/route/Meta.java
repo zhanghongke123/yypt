@@ -2,6 +2,8 @@ package com.zwsj.yypt.common.domain.route;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @创建人 zhk
  * @创建时间 2019-04-02
@@ -9,10 +11,7 @@ import lombok.Data;
  */
 @Data
 public class Meta {
-    public Meta(String title,String icon){
-        this.title = title;
-        this.icon = icon;
-    }
     private String title;
     private String icon;
+    private List<YyptButton> buttons;
 }

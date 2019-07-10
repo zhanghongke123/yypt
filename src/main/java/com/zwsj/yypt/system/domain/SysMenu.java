@@ -15,7 +15,7 @@ import java.util.List;
  * @创建时间 2019-04-01
  * @描述
  */
-@TableName("menu")
+@TableName("sys_menu")
 @Data
 public class SysMenu {
 
@@ -48,9 +48,7 @@ public class SysMenu {
     private String permission;
 
 
-    // 1 为菜单  2 为按钮
-    @TableField("type")
-    private Long type;
+
 
 
 

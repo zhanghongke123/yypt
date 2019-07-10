@@ -11,9 +11,11 @@ import com.zwsj.yypt.common.properties.YyptProperties;
 import com.zwsj.yypt.common.service.CacheService;
 import com.zwsj.yypt.common.utils.*;
 import com.zwsj.yypt.system.domain.SysMenu;
+import com.zwsj.yypt.system.domain.SysMenuButton;
 import com.zwsj.yypt.system.domain.SysRole;
 import com.zwsj.yypt.system.domain.SysUser;
 import com.zwsj.yypt.system.service.LoginLogService;
+import com.zwsj.yypt.system.service.SysMenuButtonService;
 import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysUserService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -54,6 +56,9 @@ public class LoginController {
 
     @Autowired
     CacheService cacheService;
+
+    @Autowired
+    SysMenuButtonService sysMenuButtonService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -118,11 +123,17 @@ public class LoginController {
         //生成路由信息
         List<SysMenu> menuList = sysMenuService.getMenusByRoleId(Long.parseLong(roleId));
 
-        Set<String> permissions = menuList.stream().map(SysMenu::getPermission).collect(Collectors.toSet());
-        //权限信息保存至redis
-        cacheService.savePermissions(request.getHeader(JWTFilter.TOKEN),permissions);
+        List<SysMenuButton> buttonList = sysMenuButtonService.getMenuButtonByRoleId(Long.parseLong(roleId));
 
-        return YyptResponse.success(TreeUtil.buildVueRouter(menuList));
+        Set<String> menupermissions = menuList.stream().map(SysMenu::getPermission).collect(Collectors.toSet());
+
+        Set<String> buttonpermissions = buttonList.stream().map(SysMenuButton::getPermission).collect(Collectors.toSet());
+
+        menupermissions.addAll(buttonpermissions);
+        //权限信息保存至redis
+        cacheService.savePermissions(request.getHeader(JWTFilter.TOKEN),menupermissions);
+
+        return YyptResponse.success(TreeUtil.buildVueRouter(menuList,buttonList));
     }
 
 

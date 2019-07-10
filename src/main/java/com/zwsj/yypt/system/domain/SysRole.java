@@ -14,7 +14,7 @@ import java.util.Date;
  * @创建时间 2019-04-01
  * @描述
  */
-@TableName("role")
+@TableName("sys_role")
 @Data
 @ToString
 public class SysRole {
@@ -23,11 +23,22 @@ public class SysRole {
     private Long roleId;
 
 
+    /**
+     * 角色名称
+     */
     @TableField("role_name")
     private String roleName;
 
+    /**
+     * 角色编码
+     */
     @TableField("role_code")
     private String roleCode;
+
+    /**
+     * 角色对应的菜单ID
+     */
+    private transient String  menuIds;
 
 
     @TableField("create_date")

@@ -7,7 +7,6 @@
         <result column="component" jdbcType="VARCHAR" property="component" />
         <result column="parentid" jdbcType="INTEGER" property="parentid" />
         <result column="order_code" jdbcType="INTEGER" property="orderCode" />
-        <result column="type" jdbcType="INTEGER" property="type" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="icon" jdbcType="VARCHAR" property="icon" />
         <result column="permission" jdbcType="VARCHAR" property="permission" />
@@ -19,19 +18,33 @@
         SELECT
             b.*
         FROM
-            role_menu a
-        LEFT JOIN menu b ON a.menu_id = b.menu_id
+            sys_role_menu a
+        LEFT JOIN sys_menu b ON a.menu_id = b.menu_id
         where a.role_id = #{roleId}
-        and b.type = 1
+        AND b.menu_id is not null
         order by  b.order_code desc
     </select>
     
     
     <select id="getAllMenu" resultMap="BaseResultMap">
         select a.*
-         from menu a
-         where a.type = 1
+         from sys_menu a
+         order by a.order_code desc
     </select>
+
+    
+    <!-- 利用函数找到该节点下面所有的子节点 -->
+    <delete id="deleteMenu" parameterType="long">
+        DELETE FROM sys_menu
+        WHERE menu_id IN (
+		SELECT
+			cc.menu_id
+		FROM
+			(
+				SELECT b.menu_id FROM sys_menu b WHERE FIND_IN_SET( menu_id,findMenuChildren (#{menuId}))
+			) cc
+	     )
+    </delete>
 
 
 

@@ -1,6 +1,7 @@
 package com.zwsj.yypt.system.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zwsj.yypt.system.domain.SysMenu;
 import com.zwsj.yypt.system.domain.SysRole;
 import java.util.List;
 
@@ -11,8 +12,9 @@ import java.util.List;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
-
-
     List<SysRole> getUserRoles(Long userId);
+
+
+    List<SysRole> list(SysRole sysRole);
 
 }

@@ -10,24 +10,26 @@ import java.util.Date;
 
 /**
  * @创建人 zhk
- * @创建时间 2019-04-01
+ * @创建时间 2019-07-08
  * @描述
  */
-@TableName("sys_role_menu")
+@TableName("sys_role_button")
 @Data
-public class SysRoleMenu {
+public class SysRoleButton {
 
-    @TableId(value = "role_menu_id",type = IdType.AUTO)
-    private Long roleMenuId;
+
+    @TableId(value = "role_button_id",type = IdType.AUTO)
+    private Long roleButtonId;
 
 
     @TableField("role_id")
     private Long roleId;
 
-
     @TableField("menu_id")
     private Long menuId;
 
+    @TableField("button_id")
+    private Long buttonId;
 
     @TableField("create_date")
     private Date createDate;
