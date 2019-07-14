@@ -1,5 +1,7 @@
 package com.zwsj.yypt.system.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zwsj.yypt.common.controller.BaseController;
 import com.zwsj.yypt.common.domain.QueryRequest;
 import com.zwsj.yypt.common.domain.YyptResponse;
@@ -17,21 +19,21 @@ import java.util.Map;
  * @描述
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("sysuser")
 @Validated
 public class SysUserController  {
     @Autowired
     private  SysUserService sysUserService;
 
-//    @GetMapping("list")
-//    public Map<String, Object> list(QueryRequest request, SysUser sysUser){
-//        Map<String, Object> data = super.selectByPageNumSize(request,() -> sysUserService.list(sysUser,request));
-//        return YyptResponse.success(data);
-//    }
-
     @PostMapping("")
-    public YyptResponse add(@RequestBody SysUser sysUser){
-        SysUser user = sysUserService.addUser(sysUser);
-        return YyptResponse.success(user);
+    public YyptResponse list(@RequestBody QueryRequest<SysUser> request){
+        IPage<SysUser> sysUserPage = sysUserService.list(request.getQuerylist(),request);
+        return YyptResponse.success(sysUserPage);
     }
+
+//    @PostMapping("")
+//    public YyptResponse add(@RequestBody SysUser sysUser){
+//        SysUser user = sysUserService.addUser(sysUser);
+//        return YyptResponse.success(user);
+//    }
 }

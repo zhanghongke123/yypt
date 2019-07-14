@@ -9,9 +9,11 @@ import com.zwsj.yypt.common.utils.TreeUtil;
 import com.zwsj.yypt.system.domain.SysMenu;
 import com.zwsj.yypt.system.domain.SysMenuButton;
 import com.zwsj.yypt.system.domain.SysRole;
+import com.zwsj.yypt.system.domain.SysRoleUser;
 import com.zwsj.yypt.system.service.SysMenuButtonService;
 import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysRoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -42,11 +44,25 @@ public class SysRoleController {
     @Autowired
     SysMenuButtonService sysMenuButtonService;
 
+
+
     @RequestMapping("/list")
     public YyptResponse list(@RequestBody SysRole sysRole){
        List<SysRole> data = sysRoleService.list(sysRole);
        return YyptResponse.success(data);
     }
+
+    @RequestMapping("/save")
+    public YyptResponse save(@RequestBody SysRole sysRole){
+        return YyptResponse.success(sysRoleService.updateOrAdd(sysRole));
+    }
+
+    @RequestMapping("/del")
+    public YyptResponse del(@RequestBody SysRole sysRole) throws Exception{
+        sysRoleService.del(sysRole);
+        return YyptResponse.success("删除成功");
+    }
+
 
 
 
@@ -113,6 +129,30 @@ public class SysRoleController {
         return YyptResponse.success("保存成功");
     }
 
+
+    @RequestMapping("/getRoleUsers")
+    public YyptResponse getRoleUsers(@RequestBody JSONObject param){
+        String roleId = param.getString("roleId");
+        if(StringUtils.isEmpty(roleId)){
+            return YyptResponse.failure(ResultEnum.PARAMETER_ERROR,"角色ID不能为空");
+        }
+        SysRole sysRole = new SysRole();
+        sysRole.setRoleId(Long.parseLong(roleId));
+        return YyptResponse.success(sysRoleService.getRoleUsers(sysRole));
+    }
+
+    @RequestMapping("/delRoleUser")
+    public YyptResponse delRoleUser(@RequestBody SysRoleUser sysRoleUser) throws Exception{
+        Long roleUserId = sysRoleUser.getRoleUserId();
+        if( roleUserId == null){
+            return YyptResponse.failure(ResultEnum.PARAMETER_ERROR,"角色用户ID不能为空");
+        }
+        sysRoleService.delRoleUser(sysRoleUser);
+        return YyptResponse.success("删除成功");
+    }
+
+
+
     /**
      * 将menu转化为{'menuid':[button数组]}
      * @param sysMenuButtons
@@ -132,4 +172,8 @@ public class SysRoleController {
 
         return menubuttonMap;
     }
+
+
+
+
 }

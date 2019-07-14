@@ -23,26 +23,7 @@
         AND  b.role_id = #{roleId}
     </select>
     
-    
-    <select id="getAllMenu" resultMap="BaseResultMap">
-        select a.*
-         from menu a
-         order by a.order_code desc
-    </select>
 
-    
-    <!-- 利用函数找到该节点下面所有的子节点 -->
-    <delete id="deleteMenu" parameterType="long">
-        DELETE FROM menu
-        WHERE menu_id IN (
-		SELECT
-			cc.menu_id
-		FROM
-			(
-				SELECT b.menu_id FROM menu b WHERE FIND_IN_SET( menu_id,findMenuChildren (#{menuId}))
-			) cc
-	     )
-    </delete>
 
 
 

@@ -1,7 +1,9 @@
 package com.zwsj.yypt.system.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zwsj.yypt.system.domain.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,6 +14,6 @@ import java.util.List;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
-    List<SysUser> list(SysUser sysUser);
+    Page<SysUser> list(Page page, @Param("sysUser") SysUser sysUser);
 
 }

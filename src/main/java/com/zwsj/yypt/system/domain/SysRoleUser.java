@@ -26,6 +26,8 @@ public class SysRoleUser {
     @TableField("role_id")
     private Long userId;
 
+    private transient String userName;
+
     @TableField("role_id")
     private Date createDate;
 }

@@ -4,16 +4,64 @@
     <resultMap id="BaseResultMap" type="com.zwsj.yypt.system.domain.SysUser">
         <id column="user_id" jdbcType="INTEGER" property="userId" />
         <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
         <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
         <result column="avatar" jdbcType="VARCHAR" property="avatar" />
         <result column="mobile" jdbcType="INTEGER" property="mobile" />
+        <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+        <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+        <result column="openid" jdbcType="VARCHAR" property="openid" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="lock_date" jdbcType="TIMESTAMP" property="lockDate" />
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
         <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
         <result column="roleNames" jdbcType="VARCHAR" property="roleNames" />
         <result column="roleIds" jdbcType="VARCHAR" property="roleIds" />
     </resultMap>
 
-    <select id="list" resultMap="BaseResultMap" parameterType="sysuser">
+    <select id="list" resultMap="BaseResultMap" parameterType="sysUser">
+        SELECT
+          a.user_id,
+          a.user_name,
+          a.real_name,
+          a.avatar,
+          a.mobile,
+          a.dept_id,
+          b.dept_name,
+          a.idcard,
+          a.openid,
+          a.status,
+          a.lock_date,
+          a.create_date,
+          a.modify_date,
+          GROUP_CONCAT(d.role_id) roleIds,
+          GROUP_CONCAT(d.role_name) roleNames
+        FROM
+            sys_user AS a
+        LEFT JOIN sys_dept AS b ON a.dept_id = b.dept_id
+        LEFT JOIN sys_role_user AS c ON a.user_id = c.user_id,
+        sys_role d
+        where c.role_id = d.role_id
+        <!--<if test=" userId != null and userId != '' ">-->
+             <!--AND  a.user_id = #{userId}-->
+        <!--</if>-->
+
+        GROUP BY
+            a.user_id,
+          a.user_name,
+          a.real_name,
+          a.avatar,
+          a.mobile,
+          a.dept_id,
+          b.dept_name,
+          a.idcard,
+          a.openid,
+          a.status,
+          a.lock_date,
+          a.create_date,
+          a.modify_date
+
 
     </select>
 

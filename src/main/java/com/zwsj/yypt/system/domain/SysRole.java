@@ -35,6 +35,9 @@ public class SysRole {
     @TableField("role_code")
     private String roleCode;
 
+    @TableField("memo")
+    private String memo;
+
     /**
      * 角色对应的菜单ID
      */

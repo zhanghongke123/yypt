@@ -29,18 +29,27 @@
                 a.role_code,
                 a.create_date,
                 a.modify_date,
+                a.memo,
                 GROUP_CONCAT(b.menu_id) menuids
             FROM
                 sys_role a
             LEFT JOIN sys_role_menu b ON a.role_id = b.role_id
+            WHERE 1=1
+            <if test=" roleId != null and roleId != ''">
+                and a.role_id = #{roleId}
+            </if>
             GROUP BY
+                a.memo,
                 a.role_id,
                 a.role_name,
                 a.role_code,
                 a.create_date,
                 a.modify_date
+            ORDER BY a.role_id
     </select>
     
+    
+
     
 
 

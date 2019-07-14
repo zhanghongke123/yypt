@@ -3,11 +3,13 @@ package com.zwsj.yypt.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.base.Equivalence;
 import com.zwsj.yypt.common.domain.QueryRequest;
 import com.zwsj.yypt.common.properties.YyptConstant;
 import com.zwsj.yypt.common.utils.MD5Utils;
+import com.zwsj.yypt.common.utils.SortUtil;
 import com.zwsj.yypt.system.dao.SysRoleMapper;
 import com.zwsj.yypt.system.dao.SysRoleUserMapper;
 import com.zwsj.yypt.system.dao.SysUserMapper;
@@ -57,20 +59,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
     @Override
     public IPage<SysUser> list(SysUser sysUser, QueryRequest request) {
-//        try {
-//            if (request.getSortField() != null) {
-//                sysUser.setSortField(request.getSortField());
-//                if (StringUtils.equals(YyptConstant.ORDER_ASC, request.getSortOrder()))
-//                    sysUser.setSortOrder("asc");
-//                else if (StringUtils.equals(YyptConstant.ORDER_DESC, request.getSortOrder()))
-//                    sysUser.setSortOrder("desc");
-//            }
-//            return this.sysUserMapper.list(sysUser);
-//        } catch (Exception e) {
-//            log.error("查询用户异常", e);
-//            return new ArrayList<>();
-//        }
-    return null;
+        try {
+            Page<SysUser> page = new Page<>();
+            SortUtil.handlePageSort(request, page, "userId",YyptConstant.ORDER_ASC,true);
+            return this.sysUserMapper.list(page,sysUser);
+        } catch (Exception e) {
+            log.error("查询用户异常", e);
+            return null;
+        }
     }
 
     @Override

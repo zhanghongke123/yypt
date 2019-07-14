@@ -2,6 +2,8 @@ package com.zwsj.yypt.system.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import lombok.extern.java.Log;
+
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -19,9 +21,18 @@ public class SysUser {
     @TableId(value = "user_id",type = IdType.AUTO)
     private Long userId;
 
+    /**
+     * 账号名称（用来登录）
+     */
     @TableField("user_name")
     @NotBlank
     private String userName;
+
+    /**
+     * 真实姓名
+     */
+    @TableField("real_name")
+    private String realName;
 
     @TableField("user_password")
     private String userPassword;
@@ -32,13 +43,44 @@ public class SysUser {
     @TableField("mobile")
     private String mobile;
 
+    @TableField("dept_id")
+    private Long deptId;
+
+    /**
+     * 部门名称
+     */
+    private transient String deptName;
+
+    /**
+     * 身份证号
+     */
+    @TableField("idcard")
+    private String idcard;
+
+    /**
+     * 用来微信绑定
+     */
+    @TableField("openid")
+    private String openid;
+
+
+    /**
+     * 人员状态 0停用  1正常  2 锁定
+     */
+    @TableField("status")
+    private Long status;
+
     @TableField("create_date")
     private Date  createDate;
 
     @TableField("modify_date")
     private  Date modifyDate;
 
-
+    /**
+     * 锁定日期
+     */
+    @TableField("lock_date")
+    private Date lockDate;
     private transient List<SysRole> roleList;
 
 
