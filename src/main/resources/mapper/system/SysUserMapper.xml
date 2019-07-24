@@ -35,14 +35,15 @@
           a.lock_date,
           a.create_date,
           a.modify_date,
+          a.sex,
           GROUP_CONCAT(d.role_id) roleIds,
           GROUP_CONCAT(d.role_name) roleNames
         FROM
             sys_user AS a
         LEFT JOIN sys_dept AS b ON a.dept_id = b.dept_id
-        LEFT JOIN sys_role_user AS c ON a.user_id = c.user_id,
-        sys_role d
-        where c.role_id = d.role_id
+        LEFT JOIN sys_role_user AS c ON a.user_id = c.user_id
+        LEFT JOIN sys_role d ON  c.role_id = d.role_id
+        where 1=1
         <!--<if test=" userId != null and userId != '' ">-->
              <!--AND  a.user_id = #{userId}-->
         <!--</if>-->

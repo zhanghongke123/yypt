@@ -46,6 +46,10 @@ public class SysUser {
     @TableField("dept_id")
     private Long deptId;
 
+
+    @TableField("sex")
+    private Integer sex;
+
     /**
      * 部门名称
      */
