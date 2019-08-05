@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-07-14 23:09:42
+Date: 2019-08-05 20:52:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,8 +36,7 @@ CREATE TABLE `sys_dept` (
 -- ----------------------------
 INSERT INTO `sys_dept` VALUES ('0', '最高级单位', '0', '-1', '最高级单位不可删除', null, '2019-07-12 17:12:07', '2019-07-14 07:24:23');
 INSERT INTO `sys_dept` VALUES ('15', '总公司', '1', '0', null, '2', '2019-07-14 07:23:29', '2019-07-14 07:23:29');
-INSERT INTO `sys_dept` VALUES ('16', '信息部', '1', '15', null, '3', '2019-07-14 07:23:45', '2019-07-14 07:23:45');
-INSERT INTO `sys_dept` VALUES ('17', '仓储部', '3', '15', null, 'CC', '2019-07-14 07:24:13', '2019-07-14 07:24:13');
+INSERT INTO `sys_dept` VALUES ('17', '总公司2', '2', '0', null, '12112', '2019-07-24 13:32:50', '2019-07-29 09:25:27');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -55,17 +54,19 @@ CREATE TABLE `sys_menu` (
   `modify_date` datetime DEFAULT NULL,
   `permission` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('0', '', '', '-1', null, '顶级目录', 'link', '2019-06-10 18:10:28', '2019-06-24 23:55:00', null);
-INSERT INTO `sys_menu` VALUES ('1', '/system', 'Layout', '0', null, '系统设置', 'setting', '2019-06-10 16:35:07', '2019-06-19 16:35:11', 'aa');
-INSERT INTO `sys_menu` VALUES ('2', '/user', 'system/user', '1', '0', '人员管理', 'user', '2019-06-09 23:17:43', '2019-07-05 03:53:20', 'aa');
+INSERT INTO `sys_menu` VALUES ('0', '', '', '-1', '0', '顶级目录', 'link', '2019-06-10 18:10:28', '2019-06-24 23:55:00', null);
+INSERT INTO `sys_menu` VALUES ('1', '/system', 'Layout', '0', '1', '系统设置', 'setting', '2019-06-10 16:35:07', '2019-06-19 16:35:11', 'aa');
+INSERT INTO `sys_menu` VALUES ('2', '/user', 'system/user', '1', '', '人员管理', 'user', '2019-06-09 23:17:43', '2019-07-05 03:53:20', 'aa');
 INSERT INTO `sys_menu` VALUES ('3', '/menu', 'system/menu', '1', null, '功能管理', 'menu', '2019-06-10 18:10:28', '2019-07-05 03:53:13', null);
 INSERT INTO `sys_menu` VALUES ('11', 'sysrole', 'system/role', '1', null, '角色管理', 'role', '2019-06-25 06:53:38', '2019-06-25 06:58:06', null);
-INSERT INTO `sys_menu` VALUES ('12', '/sysdept', 'system/dept', '1', '0', '部门管理', 'dept', '2019-07-09 22:40:32', '2019-07-12 03:35:33', null);
+INSERT INTO `sys_menu` VALUES ('12', '/sysdept', 'system/dept', '1', '', '部门管理', 'dept', '2019-07-09 22:40:32', '2019-07-12 03:35:33', null);
+INSERT INTO `sys_menu` VALUES ('13', '/syslog', 'Layout', '0', '2', '系统日志', 'syslog', '2019-08-01 01:27:47', '2019-08-01 01:37:19', null);
+INSERT INTO `sys_menu` VALUES ('14', '/loginlog', 'systemlog/loginlog', '13', null, '登录日志', 'loginlog', '2019-08-01 01:39:22', '2019-08-02 07:57:02', null);
 
 -- ----------------------------
 -- Table structure for sys_menu_button
@@ -82,13 +83,13 @@ CREATE TABLE `sys_menu_button` (
   `permission` varchar(200) DEFAULT NULL,
   `order_code` int(20) DEFAULT NULL,
   PRIMARY KEY (`button_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_menu_button
 -- ----------------------------
-INSERT INTO `sys_menu_button` VALUES ('3', '新增', 'aa', 'menu', '2', '2019-07-09 15:15:49', '2019-07-10 09:29:29', 'add', null);
-INSERT INTO `sys_menu_button` VALUES ('4', '删除', '1', '', '2', '2019-07-09 15:16:04', '2019-07-09 15:16:04', '121212', null);
+INSERT INTO `sys_menu_button` VALUES ('3', '新增', 'aa', 'new', '2', '2019-07-09 15:15:49', '2019-07-24 12:28:03', 'user:add', null);
+INSERT INTO `sys_menu_button` VALUES ('4', '修改', '1', 'edit', '2', '2019-07-09 15:16:04', '2019-07-24 12:28:25', 'user:edit', null);
 INSERT INTO `sys_menu_button` VALUES ('6', '新增', '', 'new', '11', '2019-07-10 09:40:52', '2019-07-10 09:40:52', 'role:add', null);
 INSERT INTO `sys_menu_button` VALUES ('7', '修改', '', 'edit', '11', '2019-07-10 09:41:17', '2019-07-10 09:41:17', 'role:edit', null);
 INSERT INTO `sys_menu_button` VALUES ('8', '删除', '', 'delete', '11', '2019-07-10 09:41:56', '2019-07-10 09:41:56', 'role:delete', null);
@@ -97,6 +98,7 @@ INSERT INTO `sys_menu_button` VALUES ('10', '删除角色人员', '', 'delete', 
 INSERT INTO `sys_menu_button` VALUES ('11', '新增', '', 'new', '12', '2019-07-12 08:46:15', '2019-07-12 08:58:20', 'dept:add', null);
 INSERT INTO `sys_menu_button` VALUES ('12', '修改', '', 'edit', '12', '2019-07-12 08:46:44', '2019-07-12 08:46:44', 'dept:edit', null);
 INSERT INTO `sys_menu_button` VALUES ('13', '删除', '', 'delete', '12', '2019-07-12 08:47:17', '2019-07-12 08:47:17', 'dept:delete', null);
+INSERT INTO `sys_menu_button` VALUES ('14', '删除', '', 'delete', '2', '2019-07-24 12:28:54', '2019-07-24 12:28:54', 'user:delete', null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -111,7 +113,7 @@ CREATE TABLE `sys_role` (
   `memo` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `rol_name_idex` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
@@ -130,28 +132,30 @@ CREATE TABLE `sys_role_button` (
   `button_id` int(12) DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`role_button_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_button
 -- ----------------------------
-INSERT INTO `sys_role_button` VALUES ('10', '3', '2', '3', '2019-07-09 15:16:44');
-INSERT INTO `sys_role_button` VALUES ('11', '3', '2', '4', '2019-07-09 15:16:44');
-INSERT INTO `sys_role_button` VALUES ('81', '1', '12', '11', '2019-07-12 08:47:53');
-INSERT INTO `sys_role_button` VALUES ('82', '1', '12', '12', '2019-07-12 08:47:53');
-INSERT INTO `sys_role_button` VALUES ('83', '1', '12', '13', '2019-07-12 08:47:53');
-INSERT INTO `sys_role_button` VALUES ('84', '1', '2', '3', '2019-07-12 13:49:17');
-INSERT INTO `sys_role_button` VALUES ('85', '1', '2', '4', '2019-07-12 13:49:17');
 INSERT INTO `sys_role_button` VALUES ('88', '1', '11', '6', '2019-07-13 10:47:32');
 INSERT INTO `sys_role_button` VALUES ('89', '1', '11', '7', '2019-07-13 10:47:32');
 INSERT INTO `sys_role_button` VALUES ('90', '1', '11', '8', '2019-07-13 10:47:32');
 INSERT INTO `sys_role_button` VALUES ('91', '1', '11', '9', '2019-07-13 10:47:32');
 INSERT INTO `sys_role_button` VALUES ('92', '1', '11', '10', '2019-07-13 10:47:32');
-INSERT INTO `sys_role_button` VALUES ('97', '3', '11', '6', '2019-07-14 07:16:32');
-INSERT INTO `sys_role_button` VALUES ('98', '3', '11', '7', '2019-07-14 07:16:32');
-INSERT INTO `sys_role_button` VALUES ('99', '3', '11', '8', '2019-07-14 07:16:32');
-INSERT INTO `sys_role_button` VALUES ('100', '3', '11', '9', '2019-07-14 07:16:32');
-INSERT INTO `sys_role_button` VALUES ('101', '3', '11', '10', '2019-07-14 07:16:32');
+INSERT INTO `sys_role_button` VALUES ('105', '1', '2', '3', '2019-07-24 12:32:25');
+INSERT INTO `sys_role_button` VALUES ('106', '1', '2', '4', '2019-07-24 12:32:25');
+INSERT INTO `sys_role_button` VALUES ('107', '1', '2', '14', '2019-07-24 12:32:25');
+INSERT INTO `sys_role_button` VALUES ('108', '3', '11', '6', '2019-07-29 08:30:06');
+INSERT INTO `sys_role_button` VALUES ('109', '3', '11', '7', '2019-07-29 08:30:06');
+INSERT INTO `sys_role_button` VALUES ('110', '3', '11', '8', '2019-07-29 08:30:06');
+INSERT INTO `sys_role_button` VALUES ('111', '3', '11', '9', '2019-07-29 08:30:06');
+INSERT INTO `sys_role_button` VALUES ('112', '3', '11', '10', '2019-07-29 08:30:06');
+INSERT INTO `sys_role_button` VALUES ('121', '1', '12', '11', '2019-07-29 13:50:18');
+INSERT INTO `sys_role_button` VALUES ('122', '1', '12', '12', '2019-07-29 13:50:18');
+INSERT INTO `sys_role_button` VALUES ('123', '1', '12', '13', '2019-07-29 13:50:18');
+INSERT INTO `sys_role_button` VALUES ('124', '3', '2', '3', '2019-07-30 09:03:58');
+INSERT INTO `sys_role_button` VALUES ('125', '3', '2', '4', '2019-07-30 09:03:58');
+INSERT INTO `sys_role_button` VALUES ('126', '3', '2', '14', '2019-07-30 09:03:58');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -163,21 +167,23 @@ CREATE TABLE `sys_role_menu` (
   `menu_id` int(12) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   PRIMARY KEY (`role_menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=592 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=610 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('570', '3', '1', '2019-07-10 09:53:37');
-INSERT INTO `sys_role_menu` VALUES ('571', '3', '2', '2019-07-10 09:53:37');
-INSERT INTO `sys_role_menu` VALUES ('572', '3', '12', '2019-07-10 09:53:37');
-INSERT INTO `sys_role_menu` VALUES ('573', '3', '3', '2019-07-10 09:53:37');
-INSERT INTO `sys_role_menu` VALUES ('574', '3', '11', '2019-07-10 09:53:37');
-INSERT INTO `sys_role_menu` VALUES ('578', '1', '1', '2019-07-11 08:20:46');
-INSERT INTO `sys_role_menu` VALUES ('579', '1', '2', '2019-07-11 08:20:46');
-INSERT INTO `sys_role_menu` VALUES ('580', '1', '12', '2019-07-11 08:20:46');
-INSERT INTO `sys_role_menu` VALUES ('581', '1', '3', '2019-07-11 08:20:46');
-INSERT INTO `sys_role_menu` VALUES ('582', '1', '11', '2019-07-11 08:20:46');
+INSERT INTO `sys_role_menu` VALUES ('598', '1', '1', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('599', '1', '3', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('600', '1', '11', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('601', '1', '2', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('602', '1', '12', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('603', '1', '13', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('604', '1', '14', '2019-08-01 01:44:56');
+INSERT INTO `sys_role_menu` VALUES ('605', '3', '1', '2019-08-01 01:45:15');
+INSERT INTO `sys_role_menu` VALUES ('606', '3', '3', '2019-08-01 01:45:15');
+INSERT INTO `sys_role_menu` VALUES ('607', '3', '11', '2019-08-01 01:45:15');
+INSERT INTO `sys_role_menu` VALUES ('608', '3', '2', '2019-08-01 01:45:15');
+INSERT INTO `sys_role_menu` VALUES ('609', '3', '12', '2019-08-01 01:45:15');
 
 -- ----------------------------
 -- Table structure for sys_role_user
@@ -188,23 +194,20 @@ CREATE TABLE `sys_role_user` (
   `role_id` int(12) DEFAULT NULL,
   `user_id` int(12) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`role_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`role_user_id`),
+  KEY `role_fk` (`role_id`),
+  KEY `user_fk` (`user_id`),
+  CONSTRAINT `role_fk` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`),
+  CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_user
 -- ----------------------------
 INSERT INTO `sys_role_user` VALUES ('1', '1', '18', '2019-04-02 05:21:03');
-INSERT INTO `sys_role_user` VALUES ('3', '1', '21', '2019-04-07 15:04:34');
-INSERT INTO `sys_role_user` VALUES ('4', '3', '21', '2019-04-07 15:04:37');
-INSERT INTO `sys_role_user` VALUES ('5', '1', '22', '2019-04-07 15:06:09');
-INSERT INTO `sys_role_user` VALUES ('6', '1', '23', '2019-04-07 15:10:16');
-INSERT INTO `sys_role_user` VALUES ('7', '1', '24', '2019-04-07 15:12:19');
-INSERT INTO `sys_role_user` VALUES ('8', '1', '25', '2019-04-07 15:13:02');
-INSERT INTO `sys_role_user` VALUES ('9', '1', '26', '2019-04-07 15:14:34');
-INSERT INTO `sys_role_user` VALUES ('10', '3', '26', '2019-04-07 15:14:34');
-INSERT INTO `sys_role_user` VALUES ('11', '1', '27', '2019-04-07 15:17:21');
-INSERT INTO `sys_role_user` VALUES ('12', '1', '32', '2019-04-07 15:18:36');
+INSERT INTO `sys_role_user` VALUES ('23', '1', '1', '2019-07-31 11:43:54');
+INSERT INTO `sys_role_user` VALUES ('26', '3', '1', '2019-07-31 11:48:29');
+INSERT INTO `sys_role_user` VALUES ('27', '1', '20', '2019-08-02 05:46:31');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -224,17 +227,19 @@ CREATE TABLE `sys_user` (
   `real_name` varchar(200) DEFAULT NULL COMMENT '真实姓名',
   `dept_id` int(12) DEFAULT NULL COMMENT '部门ID',
   `openid` varchar(2000) DEFAULT NULL COMMENT '微信openid',
+  `sex` int(1) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_name_idx` (`user_name`) USING BTREE,
   KEY `user_dept_fk` (`dept_id`),
   CONSTRAINT `user_dept_fk` FOREIGN KEY (`dept_id`) REFERENCES `sys_dept` (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'zhk', 'ba23ab292d097c20d41ffea422a716ee', null, '12', '2019-04-06 22:27:32', '2019-04-04 22:27:48', '1', null, null, null, null, null);
-INSERT INTO `sys_user` VALUES ('18', 'kk', 'd24f37b77a107f95a86648eeecf4c228', null, null, '2019-04-04 22:27:37', '2019-06-04 23:14:47', '1', null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('1', 'zhk', 'ba23ab292d097c20d41ffea422a716ee', null, '18237716257', '2019-04-06 22:27:32', '2019-07-31 12:21:28', '1', null, '787878787878', '张红科', '15', null, '1');
+INSERT INTO `sys_user` VALUES ('18', 'kk', 'd24f37b77a107f95a86648eeecf4c228', null, '18237716258', '2019-04-04 22:27:37', '2019-07-31 12:21:02', '1', null, '1', '2121', '17', null, '2');
+INSERT INTO `sys_user` VALUES ('20', '123', null, '', '18237716253', '2019-07-31 01:53:19', '2019-07-31 01:58:06', '1', null, '41132819951012336', '张红科', '15', '', '1');
 
 -- ----------------------------
 -- Table structure for sys_web_login_log
@@ -247,7 +252,7 @@ CREATE TABLE `sys_web_login_log` (
   `location` varchar(400) DEFAULT NULL,
   `ip` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=478 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=527 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_web_login_log
@@ -729,6 +734,55 @@ INSERT INTO `sys_web_login_log` VALUES ('474', 'kk', '2019-07-14 07:16:09', '内
 INSERT INTO `sys_web_login_log` VALUES ('475', 'kk', '2019-07-14 07:22:20', '内网IP|0|0|内网IP|内网IP', '192.168.31.116');
 INSERT INTO `sys_web_login_log` VALUES ('476', 'kk', '2019-07-14 10:59:38', '内网IP|0|0|内网IP|内网IP', '192.168.31.205');
 INSERT INTO `sys_web_login_log` VALUES ('477', 'kk', '2019-07-14 12:20:39', '内网IP|0|0|内网IP|内网IP', '192.168.31.205');
+INSERT INTO `sys_web_login_log` VALUES ('478', 'kk', '2019-07-14 15:28:37', '内网IP|0|0|内网IP|内网IP', '192.168.31.205');
+INSERT INTO `sys_web_login_log` VALUES ('479', 'kk', '2019-07-14 16:11:15', '内网IP|0|0|内网IP|内网IP', '192.168.31.205');
+INSERT INTO `sys_web_login_log` VALUES ('480', 'kk', '2019-07-17 10:50:41', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('481', 'kk', '2019-07-17 11:53:16', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('482', 'kk', '2019-07-18 11:45:26', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('483', 'kk', '2019-07-24 11:47:20', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('484', 'kk', '2019-07-24 11:56:50', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('485', 'kk', '2019-07-24 12:57:08', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('486', 'kk', '2019-07-24 13:57:18', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('487', 'kk', '2019-07-29 08:02:15', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('488', 'kk', '2019-07-29 09:06:27', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('489', 'kk', '2019-07-29 09:39:53', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('490', 'kk', '2019-07-29 09:46:29', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('491', 'kk', '2019-07-29 09:59:48', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('492', 'kk', '2019-07-29 10:00:10', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('493', 'kk', '2019-07-29 10:01:08', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('494', 'kk', '2019-07-29 10:04:42', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('495', 'kk', '2019-07-29 12:54:41', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('496', 'kk', '2019-07-29 13:56:20', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('497', 'kk', '2019-07-29 14:53:35', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('498', 'kk', '2019-07-29 23:57:48', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('499', 'kk', '2019-07-29 23:57:59', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('500', 'kk', '2019-07-30 06:58:02', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('501', 'kk', '2019-07-30 08:35:29', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('502', 'kk', '2019-07-30 10:30:16', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('503', 'kk', '2019-07-31 01:33:53', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('504', 'kk', '2019-07-31 02:07:05', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('505', 'kk', '2019-07-31 03:39:17', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('506', 'kk', '2019-07-31 04:08:14', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('507', 'kk', '2019-07-31 05:50:31', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('508', 'kk', '2019-07-31 07:06:45', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('509', 'kk', '2019-07-31 08:09:00', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('510', 'kk', '2019-07-31 09:22:36', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('511', 'kk', '2019-07-31 09:39:30', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('512', 'kk', '2019-07-31 11:09:42', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('513', 'kk', '2019-07-31 12:08:10', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('514', 'kk', '2019-07-31 12:08:22', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('515', 'kk', '2019-08-01 01:23:58', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('516', 'kk', '2019-08-02 03:56:43', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('517', 'zhk', '2019-08-02 03:57:47', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('518', 'zhk', '2019-08-02 03:57:59', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('519', 'kk', '2019-08-02 05:16:02', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('520', 'kk', '2019-08-02 06:42:13', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('521', 'zhk', '2019-08-02 07:46:23', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('522', 'kk', '2019-08-02 08:47:39', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('523', 'kk', '2019-08-02 09:20:55', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('524', 'zhk', '2019-08-02 09:25:21', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('525', 'zhk', '2019-08-02 10:45:47', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
+INSERT INTO `sys_web_login_log` VALUES ('526', 'zhk', '2019-08-02 11:27:29', '内网IP|0|0|内网IP|内网IP', '127.0.0.1');
 
 -- ----------------------------
 -- Function structure for findDeptChildren
