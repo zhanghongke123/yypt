@@ -1,8 +1,6 @@
 package com.zwsj.yypt.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zwsj.yypt.common.controller.BaseController;
 import com.zwsj.yypt.common.domain.EleTreeData;
 import com.zwsj.yypt.common.domain.QueryRequest;
 import com.zwsj.yypt.common.domain.YyptResponse;
@@ -13,10 +11,11 @@ import com.zwsj.yypt.system.service.SysDeptService;
 import com.zwsj.yypt.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @创建人 zhk
@@ -35,7 +34,7 @@ public class SysUserController  {
 
     @PostMapping("")
     public YyptResponse list(@RequestBody QueryRequest<SysUser> request){
-        IPage<SysUser> sysUserPage = sysUserService.list(request.getQuerylist(),request);
+        IPage<SysUser> sysUserPage = sysUserService.list(request);
         return YyptResponse.success(sysUserPage);
     }
 
@@ -46,6 +45,19 @@ public class SysUserController  {
         List<EleTreeData> depttree =  TreeUtil.buildElemTree(depts,"deptId","{deptName}({deptId})",
                 "parentid");
         return YyptResponse.success(depttree);
+    }
+
+    @PostMapping("/save")
+    public YyptResponse save(@RequestBody SysUser sysUser) throws Exception{
+        sysUserService.updateOrAdd(sysUser);
+        return YyptResponse.success("保存成功");
+    }
+
+
+    @PostMapping("/del")
+    public YyptResponse del(@RequestBody SysUser sysUser){
+        sysUserService.del(sysUser);
+        return YyptResponse.success("删除成功");
     }
 
 //    @PostMapping("")

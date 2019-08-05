@@ -23,11 +23,11 @@ public class SysRoleUser {
     @TableField("role_id")
     private Long roleId;
 
-    @TableField("role_id")
+    @TableField("user_id")
     private Long userId;
 
     private transient String userName;
 
-    @TableField("role_id")
+    @TableField("create_date")
     private Date createDate;
 }

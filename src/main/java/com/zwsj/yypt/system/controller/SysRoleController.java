@@ -3,23 +3,19 @@ package com.zwsj.yypt.system.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zwsj.yypt.common.domain.EleTreeData;
+import com.zwsj.yypt.common.domain.QueryRequest;
 import com.zwsj.yypt.common.domain.YyptResponse;
 import com.zwsj.yypt.common.enums.ResultEnum;
 import com.zwsj.yypt.common.utils.TreeUtil;
-import com.zwsj.yypt.system.domain.SysMenu;
-import com.zwsj.yypt.system.domain.SysMenuButton;
-import com.zwsj.yypt.system.domain.SysRole;
-import com.zwsj.yypt.system.domain.SysRoleUser;
+import com.zwsj.yypt.system.domain.*;
 import com.zwsj.yypt.system.service.SysMenuButtonService;
 import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysRoleService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -139,6 +135,31 @@ public class SysRoleController {
         SysRole sysRole = new SysRole();
         sysRole.setRoleId(Long.parseLong(roleId));
         return YyptResponse.success(sysRoleService.getRoleUsers(sysRole));
+    }
+
+    @RequestMapping("/userRep")
+    public YyptResponse getUsers(@RequestBody QueryRequest<SysUser> request){
+        Long queryRoleId = request.getQuerylist().getQueryRoleId();
+        if(queryRoleId == null){
+            return YyptResponse.failure(ResultEnum.PARAMETER_ERROR,"queryRoleId不能为空");
+        }
+        return YyptResponse.success(sysRoleService.userRep(request));
+    }
+
+
+    @RequestMapping("/saverRoleUser")
+    public YyptResponse saverRoleUser(@RequestBody JSONObject jsonObject){
+        String roleId = jsonObject.getString("roleId");
+        String userIds = jsonObject.getString("userIds");
+        if(StringUtils.isBlank(roleId)){
+            return YyptResponse.failure(ResultEnum.PARAMETER_ERROR,"roleId不能为空");
+        }
+
+        if(StringUtils.isBlank(userIds)){
+            return YyptResponse.failure(ResultEnum.PARAMETER_ERROR,"userIds 数组不能为空");
+        }
+        sysRoleService.saverRoleUser(Long.parseLong(roleId), userIds);
+        return YyptResponse.success("授权成功");
     }
 
     @RequestMapping("/delRoleUser")

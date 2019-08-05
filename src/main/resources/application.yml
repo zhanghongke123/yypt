@@ -1,9 +1,9 @@
 spring:
   redis:
-      database: 3
-      host: 47.104.194.125
+      database: 0
+      host: 127.0.0.1
       port: 6379
-      password: osgc1326!
+      password:
       jedis:
         pool:
           min-idle: 8

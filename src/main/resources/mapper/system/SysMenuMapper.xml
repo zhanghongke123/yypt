@@ -22,14 +22,14 @@
         LEFT JOIN sys_menu b ON a.menu_id = b.menu_id
         where a.role_id = #{roleId}
         AND b.menu_id is not null
-        order by  b.order_code desc
+        order by  b.order_code
     </select>
     
     
     <select id="getAllMenu" resultMap="BaseResultMap">
         select a.*
          from sys_menu a
-         order by a.order_code desc
+         order by a.order_code
     </select>
 
     

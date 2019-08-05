@@ -47,8 +47,7 @@
                 a.modify_date
             ORDER BY a.role_id
     </select>
-    
-    
+
 
     
 

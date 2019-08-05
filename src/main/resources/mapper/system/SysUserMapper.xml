@@ -68,6 +68,48 @@
 
 
 
+    <select id="userRep" resultMap="BaseResultMap" parameterType="sysUser">
+        SELECT
+        a.user_id,
+        a.user_name,
+        a.real_name,
+        a.avatar,
+        a.mobile,
+        a.dept_id,
+        b.dept_name,
+        a.idcard,
+        a.openid,
+        a.status,
+        a.lock_date,
+        a.create_date,
+        a.modify_date,
+        a.sex
+        FROM
+        sys_user AS a
+        LEFT JOIN sys_dept AS b ON a.dept_id = b.dept_id
+        where 1=1
+        and  a.user_id not in (select b.user_id from sys_role_user AS b where b.role_id = #{sysUser.queryRoleId})
+        <if test=" sysUser.userId != null and sysUser.userId != '' ">
+        AND  a.user_id = #{sysUser.userId}
+        </if>
+
+        <if test=" sysUser.userName != null and sysUser.userName != '' ">
+            AND  a.user_name = #{sysUser.userName}
+        </if>
+
+        <if test=" sysUser.userName != null and sysUser.userName != '' ">
+        AND  a.user_name = #{sysUser.userName}
+        </if>
+
+        <if test=" sysUser.status != null and sysUser.status != '' or sysUser.status ==0 ">
+            AND  a.status = #{sysUser.status}
+        </if>
+
+
+    </select>
+
+
+
 
 
 </mapper>

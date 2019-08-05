@@ -1,14 +1,18 @@
 package com.zwsj.yypt.system.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zwsj.yypt.system.dao.SysRoleButtonMapper;
-import com.zwsj.yypt.system.dao.SysRoleMapper;
-import com.zwsj.yypt.system.dao.SysRoleMenuMapper;
-import com.zwsj.yypt.system.dao.SysRoleUserMapper;
+import com.zwsj.yypt.common.domain.QueryRequest;
+import com.zwsj.yypt.common.properties.YyptConstant;
+import com.zwsj.yypt.common.utils.SortUtil;
+import com.zwsj.yypt.system.dao.*;
 import com.zwsj.yypt.system.domain.*;
 import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysRoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +26,11 @@ import java.util.List;
  * @描述
  */
 @Service
+@Slf4j
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> implements SysRoleService {
+
+    @Autowired
+    SysUserMapper sysUserMapper;
 
     @Autowired
     SysRoleMapper sysRoleMapper;
@@ -99,8 +107,36 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
     }
 
     @Override
+    @Transactional
     public void delRoleUser(SysRoleUser sysRoleUser) throws Exception {
         sysRoleUserMapper.deleteById(sysRoleUser.getRoleUserId());
+    }
+
+    @Override
+    public IPage<SysUser> userRep(QueryRequest<SysUser> request) {
+        try {
+            Page<SysUser> page = new Page<>();
+            SortUtil.handlePageSort(request, page, "userId",YyptConstant.ORDER_DESC,true);
+            return sysUserMapper.userRep(page,request.getQuerylist());
+        } catch (Exception e) {
+            log.error("查询用户异常", e);
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void saverRoleUser(Long roleId, String userIds) {
+        String[] userIdArry = userIds.split(",");
+        for(String userId:userIdArry){
+            SysRoleUser sysRoleUser = new SysRoleUser();
+            sysRoleUser.setRoleId(roleId);
+            sysRoleUser.setCreateDate(new Date());
+            sysRoleUser.setUserId(Long.parseLong(userId));
+            sysRoleUserMapper.insert(sysRoleUser);
+        }
+
+
     }
 
 

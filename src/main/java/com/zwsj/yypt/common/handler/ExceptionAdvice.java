@@ -135,7 +135,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public YyptResponse globalException(HttpServletRequest request, Throwable ex) {
         return new YyptResponse().failure(ResultEnum.OTHER_ERROR,
-                "-----"+ex.toString() + ": " + ex.getMessage());
+                 ex.getMessage());
     }
 
 

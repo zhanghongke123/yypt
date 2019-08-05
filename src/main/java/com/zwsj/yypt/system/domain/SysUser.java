@@ -104,6 +104,8 @@ public class SysUser {
 
     private  transient String id;
 
+    private  transient Long queryRoleId;
+
 
     /**
      * shiro-redis v3.1.0 必须要有 getAuthCacheKey()或者 getId()方法

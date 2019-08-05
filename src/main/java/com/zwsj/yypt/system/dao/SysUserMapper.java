@@ -16,4 +16,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     Page<SysUser> list(Page page, @Param("sysUser") SysUser sysUser);
 
+
+    Page<SysUser> userRep(Page page, @Param("sysUser") SysUser sysUser);
+
 }

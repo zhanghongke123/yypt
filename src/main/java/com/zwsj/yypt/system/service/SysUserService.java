@@ -3,6 +3,7 @@ package com.zwsj.yypt.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zwsj.yypt.common.domain.QueryRequest;
+import com.zwsj.yypt.system.domain.SysDept;
 import com.zwsj.yypt.system.domain.SysRole;
 import com.zwsj.yypt.system.domain.SysUser;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public interface SysUserService extends IService<SysUser> {
 
     // 用户列表
-    IPage<SysUser> list(SysUser sysUser, QueryRequest request);
+    IPage<SysUser> list(QueryRequest<SysUser> request);
 
 
 
@@ -31,8 +32,18 @@ public interface SysUserService extends IService<SysUser> {
     List<SysRole> getUserRoles(Long  userId);
 
 
+    /**
+     * 修改或添加用户
+     * @param sysUser
+     * @return
+     */
+    SysUser updateOrAdd(SysUser sysUser) throws Exception;
 
-    SysUser addUser(SysUser sysUser);
+    /**
+     * 删除用户
+     * @param sysUser
+     */
+    void del(SysUser sysUser);
 
 
 
