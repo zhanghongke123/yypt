@@ -35,4 +35,5 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper,LoginLog> im
         loginLog.setLocation(AddressUtil.getCityInfo(ip));
         this.save(loginLog);
     }
+
 }
