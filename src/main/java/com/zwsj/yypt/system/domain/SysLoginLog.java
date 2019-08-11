@@ -8,13 +8,13 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
-@TableName("sys_web_login_log")
+@TableName("sys_login_log")
 @ToString
 @Data
-public class LoginLog {
+public class SysLoginLog {
 
-    @TableId(value = "id",type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "login_id",type = IdType.AUTO)
+    private Long loginId;
 
     /**
      * 用户 ID

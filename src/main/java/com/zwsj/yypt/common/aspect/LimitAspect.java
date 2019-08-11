@@ -2,9 +2,12 @@ package com.zwsj.yypt.common.aspect;
 
 import com.google.common.collect.ImmutableList;
 import com.zwsj.yypt.common.annotation.Limit;
+import com.zwsj.yypt.common.authentication.jwt.JWTFilter;
 import com.zwsj.yypt.common.enums.LimitType;
 import com.zwsj.yypt.common.exception.LimitAccessException;
 import com.zwsj.yypt.common.utils.IPUtil;
+import com.zwsj.yypt.system.domain.SysUser;
+import com.zwsj.yypt.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,6 +36,8 @@ import java.util.Objects;
 @Aspect
 @Component
 public class LimitAspect {
+    @Autowired
+    SysUserService sysUserService;
 
     private final RedisTemplate<String, Serializable> limitRedisTemplate;
 
@@ -66,6 +71,12 @@ public class LimitAspect {
             case CUSTOMER:
                 key = limitAnnotation.key();
                 break;
+            case Token:
+                key = request.getHeader(JWTFilter.TOKEN);
+                if(StringUtils.isEmpty(key)){
+                    key = StringUtils.upperCase(method.getName());
+                }
+                break;
             default:
                 key = StringUtils.upperCase(method.getName());
         }
@@ -77,6 +88,11 @@ public class LimitAspect {
         if (count != null && count.intValue() <= limitCount) {
             return point.proceed();
         } else {
+            if(limitType == LimitType.Token){
+               //如果是通过token验证的话,超过频率的话，冻结用户
+                SysUser sysUser = new SysUser();
+
+            }
             throw new LimitAccessException("接口访问超出频率限制");
         }
     }

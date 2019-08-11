@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zwsj.yypt.common.utils.AddressUtil;
 import com.zwsj.yypt.common.utils.HttpContextUtil;
 import com.zwsj.yypt.common.utils.IPUtil;
-import com.zwsj.yypt.system.dao.LoginLogMapper;
-import com.zwsj.yypt.system.domain.LoginLog;
-import com.zwsj.yypt.system.service.LoginLogService;
+import com.zwsj.yypt.system.dao.SysLoginLogMapper;
+import com.zwsj.yypt.system.domain.SysLoginLog;
+import com.zwsj.yypt.system.service.SysLoginLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,20 +20,20 @@ import java.util.Date;
  * @描述
  */
 @Service
-public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper,LoginLog> implements LoginLogService {
+public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLoginLog> implements SysLoginLogService {
 
 
     @Override
     @Transactional
     public void saveLoginLog(String userName) {
-        LoginLog loginLog = new LoginLog();
-        loginLog.setUserName(userName);
-        loginLog.setLoginTime(new Date());
+        SysLoginLog sysLoginLog = new SysLoginLog();
+        sysLoginLog.setUserName(userName);
+        sysLoginLog.setLoginTime(new Date());
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         String ip = IPUtil.getIpAddr(request);
-        loginLog.setIp(ip);
-        loginLog.setLocation(AddressUtil.getCityInfo(ip));
-        this.save(loginLog);
+        sysLoginLog.setIp(ip);
+        sysLoginLog.setLocation(AddressUtil.getCityInfo(ip));
+        this.save(sysLoginLog);
     }
 
 }

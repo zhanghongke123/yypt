@@ -1,20 +1,13 @@
 package com.zwsj.yypt;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zwsj.yypt.common.authentication.jwt.JWTUtil;
-import com.zwsj.yypt.common.domain.route.RouteData;
 import com.zwsj.yypt.common.utils.MD5Utils;
-import com.zwsj.yypt.common.utils.TreeUtil;
 import com.zwsj.yypt.system.dao.*;
 import com.zwsj.yypt.system.domain.SysRole;
 import com.zwsj.yypt.system.domain.SysRoleUser;
 import com.zwsj.yypt.system.domain.SysUser;
-import com.zwsj.yypt.system.service.LoginLogService;
+import com.zwsj.yypt.system.service.SysLoginLogService;
 import com.zwsj.yypt.system.service.SysMenuService;
-import com.zwsj.yypt.system.service.SysRoleService;
-import org.hibernate.validator.constraints.EAN;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.management.relation.Role;
 import java.util.Date;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,7 +43,7 @@ public class YyptApplicationTests {
 
 
     @Autowired
-    LoginLogService loginLogService;
+    SysLoginLogService sysLoginLogService;
 
 
     @Autowired
@@ -114,7 +105,7 @@ public class YyptApplicationTests {
 //            System.out.println(role.toString());
 //        }
 
-        loginLogService.saveLoginLog("123");
+        sysLoginLogService.saveLoginLog("123");
 
 
     }

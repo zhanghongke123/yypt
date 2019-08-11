@@ -1,10 +1,11 @@
 package com.zwsj.yypt.system.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zwsj.yypt.common.annotation.Limit;
+import com.zwsj.yypt.common.annotation.Log;
 import com.zwsj.yypt.common.authentication.jwt.JWTFilter;
 import com.zwsj.yypt.common.authentication.jwt.JWTToken;
 import com.zwsj.yypt.common.authentication.jwt.JWTUtil;
-import com.zwsj.yypt.common.properties.YyptConstant;
 import com.zwsj.yypt.common.domain.YyptResponse;
 import com.zwsj.yypt.common.enums.ResultEnum;
 import com.zwsj.yypt.common.properties.YyptProperties;
@@ -14,13 +15,12 @@ import com.zwsj.yypt.system.domain.SysMenu;
 import com.zwsj.yypt.system.domain.SysMenuButton;
 import com.zwsj.yypt.system.domain.SysRole;
 import com.zwsj.yypt.system.domain.SysUser;
-import com.zwsj.yypt.system.service.LoginLogService;
+import com.zwsj.yypt.system.service.SysLoginLogService;
 import com.zwsj.yypt.system.service.SysMenuButtonService;
 import com.zwsj.yypt.system.service.SysMenuService;
 import com.zwsj.yypt.system.service.SysUserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @Validated
+
 public class LoginController {
 
     @Autowired
@@ -49,7 +50,7 @@ public class LoginController {
     YyptProperties yyptProperties;
 
     @Autowired
-    LoginLogService loginLogService;
+    SysLoginLogService sysLoginLogService;
 
     @Autowired
     SysMenuService sysMenuService;
@@ -64,6 +65,8 @@ public class LoginController {
     ObjectMapper objectMapper;
 
     @PostMapping("/login")
+    @Limit(key = "login", period = 60, count = 1, name = "登录接口", prefix = "limit")
+    @Log("登陆接口")
     public YyptResponse login(@RequestBody Map<String,String> params, HttpServletRequest request) throws Exception{
         String username = params.get("username");
         if(StringUtils.isBlank(username)){
@@ -99,7 +102,7 @@ public class LoginController {
         Map<String, Object> res = this.generateUserInfo(jwtToken,sysUser);
 
         //保存登录记录
-        loginLogService.saveLoginLog(username);
+        sysLoginLogService.saveLoginLog(username);
         return YyptResponse.success(res);
     }
 

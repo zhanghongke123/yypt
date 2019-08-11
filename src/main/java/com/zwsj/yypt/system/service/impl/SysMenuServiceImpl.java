@@ -1,28 +1,18 @@
 package com.zwsj.yypt.system.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zwsj.yypt.common.domain.route.RouteData;
-import com.zwsj.yypt.system.dao.LoginLogMapper;
 import com.zwsj.yypt.system.dao.SysMenuButtonMapper;
 import com.zwsj.yypt.system.dao.SysMenuMapper;
 import com.zwsj.yypt.system.dao.SysRoleMenuMapper;
-import com.zwsj.yypt.system.domain.LoginLog;
 import com.zwsj.yypt.system.domain.SysMenu;
 import com.zwsj.yypt.system.domain.SysMenuButton;
 import com.zwsj.yypt.system.domain.SysRoleMenu;
 import com.zwsj.yypt.system.service.SysMenuService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.convert.EntityWriter;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
