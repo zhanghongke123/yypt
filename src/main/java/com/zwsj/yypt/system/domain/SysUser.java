@@ -68,6 +68,10 @@ public class SysUser {
     private String openid;
 
 
+    @TableField("memo")
+    private String memo;
+
+
     /**
      * 人员状态 0停用  1正常  2 锁定
      */

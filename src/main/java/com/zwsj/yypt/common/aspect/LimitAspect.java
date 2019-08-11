@@ -1,11 +1,15 @@
 package com.zwsj.yypt.common.aspect;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.ImmutableList;
 import com.zwsj.yypt.common.annotation.Limit;
 import com.zwsj.yypt.common.authentication.jwt.JWTFilter;
+import com.zwsj.yypt.common.authentication.jwt.JWTUtil;
 import com.zwsj.yypt.common.enums.LimitType;
 import com.zwsj.yypt.common.exception.LimitAccessException;
 import com.zwsj.yypt.common.utils.IPUtil;
+import com.zwsj.yypt.common.utils.YyptUtils;
+import com.zwsj.yypt.system.dao.SysUserMapper;
 import com.zwsj.yypt.system.domain.SysUser;
 import com.zwsj.yypt.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -36,8 +41,9 @@ import java.util.Objects;
 @Aspect
 @Component
 public class LimitAspect {
+
     @Autowired
-    SysUserService sysUserService;
+    SysUserMapper sysUserMapper;
 
     private final RedisTemplate<String, Serializable> limitRedisTemplate;
 
@@ -60,7 +66,8 @@ public class LimitAspect {
         Limit limitAnnotation = method.getAnnotation(Limit.class);
         LimitType limitType = limitAnnotation.limitType();
         String name = limitAnnotation.name();
-        String key;
+        String token = request.getHeader(JWTFilter.TOKEN);
+        String key = "";
         String ip = IPUtil.getIpAddr(request);
         int limitPeriod = limitAnnotation.period();
         int limitCount = limitAnnotation.count();
@@ -72,8 +79,8 @@ public class LimitAspect {
                 key = limitAnnotation.key();
                 break;
             case Token:
-                key = request.getHeader(JWTFilter.TOKEN);
-                if(StringUtils.isEmpty(key)){
+                if(StringUtils.isEmpty(token)){
+                    log.error("描述为 [{}] 的接口 验证方式为Token Token为空取方法的名称",name);
                     key = StringUtils.upperCase(method.getName());
                 }
                 break;
@@ -90,7 +97,17 @@ public class LimitAspect {
         } else {
             if(limitType == LimitType.Token){
                //如果是通过token验证的话,超过频率的话，冻结用户
-                SysUser sysUser = new SysUser();
+                if(StringUtils.isNotEmpty(token)){
+                    String userName = JWTUtil.getUsername(token);
+                    SysUser sysUser = new SysUser();
+                    sysUser.setLockDate(new Date());
+                    sysUser.setStatus(2L);
+                    String memo = " 接口 %s 方法 %s 超过访问频率 将用户进行冻结" ;
+                    sysUser.setMemo(String.format(memo,name,method.getName()));
+                    LambdaQueryWrapper<SysUser> updateWhere = new LambdaQueryWrapper<>();
+                    updateWhere.eq(SysUser::getUserName,userName);
+                    sysUserMapper.update(sysUser,updateWhere);
+                }
 
             }
             throw new LimitAccessException("接口访问超出频率限制");

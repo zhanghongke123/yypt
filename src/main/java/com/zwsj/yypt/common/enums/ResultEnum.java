@@ -25,6 +25,10 @@ public enum ResultEnum {
 
     PARAMETER_ERROR(1, "参数错误"),
 
+    USER_STOP(1000, "用户已停用"),
+
+    USER_LOCK(2000,"用户已冻结，请联系系统管理员进行解冻"),
+
     PERMISSIONS_ERROR(5000, "验证接口权限失败"),
 
 

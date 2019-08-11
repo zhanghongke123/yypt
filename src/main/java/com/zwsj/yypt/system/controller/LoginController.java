@@ -85,6 +85,17 @@ public class LoginController {
             return YyptResponse.failure(ResultEnum.USER_NOTEXIST);
         }
 
+
+        //停用
+        if(sysUser.getStatus() == 0){
+            return YyptResponse.failure(ResultEnum.USER_STOP);
+        }
+
+        //停用
+        if(sysUser.getStatus() == 2){
+            return YyptResponse.failure(ResultEnum.USER_LOCK);
+        }
+
         if(!StringUtils.equals(password, sysUser.getUserPassword())){
             return YyptResponse.failure(ResultEnum.PASSWORD_ERROR);
         }
