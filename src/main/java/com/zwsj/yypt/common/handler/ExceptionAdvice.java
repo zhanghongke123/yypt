@@ -3,7 +3,6 @@ package com.zwsj.yypt.common.handler;
 
 import com.zwsj.yypt.common.domain.YyptResponse;
 import com.zwsj.yypt.common.enums.ResultEnum;
-import com.zwsj.yypt.common.exception.MyUnauthorizedException;
 import com.zwsj.yypt.common.exception.RedisConnectException;
 import com.zwsj.yypt.common.exception.YyptException;
 import lombok.extern.slf4j.Slf4j;
@@ -146,12 +145,7 @@ public class ExceptionAdvice {
                 e.getMessage());
     }
 
-    @ExceptionHandler(value = MyUnauthorizedException.class)
-    public YyptResponse handleMyUnauthorizedException(MyUnauthorizedException e) {
-        log.error("系统错误：{}", e.getMessage());
-        return new YyptResponse().failure(ResultEnum.TOKEN_ERROR,
-                e.getMessage());
-    }
+
 
 
     /**

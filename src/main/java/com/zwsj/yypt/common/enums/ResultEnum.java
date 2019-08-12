@@ -36,6 +36,9 @@ public enum ResultEnum {
 
     TOKEN_ERROR(5002,"TOKEN验证失败"),
 
+    TOKEN_TIMEOUT(5003,"TOKEN已过期"),
+
+
 
 
     OTHER_ERROR(99999,"其他错误")

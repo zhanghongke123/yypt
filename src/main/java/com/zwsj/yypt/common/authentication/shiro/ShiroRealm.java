@@ -3,6 +3,8 @@ package com.zwsj.yypt.common.authentication.shiro;
 
 import com.zwsj.yypt.common.authentication.jwt.JWTToken;
 import com.zwsj.yypt.common.authentication.jwt.JWTUtil;
+import com.zwsj.yypt.common.enums.ResultEnum;
+import com.zwsj.yypt.common.exception.YyptAuthorizedException;
 import com.zwsj.yypt.common.service.CacheService;
 import com.zwsj.yypt.common.utils.YyptUtils;
 import com.zwsj.yypt.common.utils.HttpContextUtil;
@@ -102,22 +104,32 @@ public class ShiroRealm extends AuthorizingRealm {
            log.error("检查是否有Token失败:{}",e);
         }
         if (IsExist == false){
-            throw new AuthenticationException("token已经过期");
+            throw  new YyptAuthorizedException(ResultEnum.TOKEN_TIMEOUT);
         }
 
         String userName= JWTUtil.getUsername(token);
 
         if (StringUtils.isBlank(userName)){
-            throw new AuthenticationException("token校验不通过");
+            throw new YyptAuthorizedException(ResultEnum.TOKEN_ERROR);
         }
 
         // 通过用户名查询用户信息
         SysUser user = sysUserService.findByName(userName);
         if (user == null){
-            throw new AuthenticationException("用户名或密码错误");
+            throw new YyptAuthorizedException(ResultEnum.USER_NOTEXIST);
         }
+
+
         if (!JWTUtil.verify(token, userName, user.getUserPassword())){
-            throw new AuthenticationException("token校验不通过");
+            throw new YyptAuthorizedException(ResultEnum.PARAMETER_ERROR);
+        }
+
+        if(user.getStatus() == 0){
+           throw  new YyptAuthorizedException(ResultEnum.USER_STOP);
+        }
+
+        if(user.getStatus() == 2){
+            throw  new YyptAuthorizedException(ResultEnum.USER_LOCK);
         }
         return new SimpleAuthenticationInfo(token, token, getName());
     }

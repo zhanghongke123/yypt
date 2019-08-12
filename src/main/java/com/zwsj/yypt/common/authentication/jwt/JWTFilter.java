@@ -5,6 +5,7 @@ package com.zwsj.yypt.common.authentication.jwt;
 import com.alibaba.fastjson.JSON;
 import com.zwsj.yypt.common.domain.YyptResponse;
 import com.zwsj.yypt.common.enums.ResultEnum;
+import com.zwsj.yypt.common.exception.YyptAuthorizedException;
 import com.zwsj.yypt.common.properties.YyptProperties;
 import com.zwsj.yypt.common.utils.SpringContextUtil;
 import com.zwsj.yypt.common.utils.YyptUtils;
@@ -20,6 +21,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 @Slf4j
@@ -46,18 +48,13 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         if (isLoginAttempt(request, response)) {
             try {
                 executeLogin(request, response);
+            }catch (YyptAuthorizedException e1){
+                YyptResponse fastWebResponse = YyptResponse.failure(e1.getResultEnum());
+                this.writeResponse(fastWebResponse, response);
+                return false;
             }catch (Exception e){
-                try {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    YyptResponse fastWebResponse = YyptResponse.failure(ResultEnum.TOKEN_ERROR,e.getMessage());
-                    out.println(JSON.toJSONString(fastWebResponse));
-                    out.flush();
-                    out.close();
-                }catch (Exception e1){
-                    log.error("Token验证时失败{}",e1);
-                }
+                YyptResponse fastWebResponse = YyptResponse.failure(ResultEnum.AUTHENTICATED_ERROR,e.getMessage());
+                this.writeResponse(fastWebResponse, response);
                 return false;
             }
         }
@@ -96,6 +93,20 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             return false;
         }
         return super.preHandle(request, response);
+    }
+
+
+    private void  writeResponse(Object obj, ServletResponse response){
+        try {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println(JSON.toJSONString(obj));
+            out.flush();
+            out.close();
+        }catch (Exception e){
+            log.error("验证时返回数据失败:{}",e);
+        }
     }
 
 }
