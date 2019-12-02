@@ -3,6 +3,7 @@ package com.zwsj.yypt.common.handler;
 
 import com.zwsj.yypt.common.domain.YyptResponse;
 import com.zwsj.yypt.common.enums.ResultEnum;
+import com.zwsj.yypt.common.exception.LimitAccessException;
 import com.zwsj.yypt.common.exception.RedisConnectException;
 import com.zwsj.yypt.common.exception.YyptException;
 import lombok.extern.slf4j.Slf4j;
@@ -121,6 +122,17 @@ public class ExceptionAdvice {
     public YyptResponse handle(NoHandlerFoundException e) {
         return new YyptResponse().failure(ResultEnum.NOTFOUND_ERROR,
                 e.getMessage());
+    }
+
+
+    /**
+     * 限流异常
+     * @param e
+     * @return
+     */
+    public YyptResponse LimitException(LimitAccessException e){
+        return new YyptResponse().failure(ResultEnum.OTHER_ERROR,
+                "服务资源正忙，请稍后再试");
     }
 
 

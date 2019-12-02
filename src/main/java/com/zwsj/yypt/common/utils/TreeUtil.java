@@ -53,11 +53,12 @@ public class TreeUtil {
                 routeData.setId(route.getMenuId());
                 routeData.setComponent(route.getComponent());
                 Meta meta = new Meta();
+                meta.setNoCache(route.getNocacheFlag() == 1 ? true : false);
                 meta.setIcon(route.getIcon());
                 meta.setTitle(route.getName());
                 meta.setButtons(menubuttonMap.get(route.getMenuId()));
                 routeData.setMeta(meta);
-                routeData.setName(route.getName());
+                routeData.setName(route.getComponentName());
                 routeData.setParentid(route.getParentid());
                 routeData.setPath(route.getPath());
                 routeData.setRedirect("");

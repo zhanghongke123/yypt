@@ -1,6 +1,8 @@
 package com.zwsj.yypt.system.controller;
 
+import com.zwsj.yypt.common.annotation.Limit;
 import com.zwsj.yypt.common.domain.YyptResponse;
+import com.zwsj.yypt.common.enums.LimitType;
 import com.zwsj.yypt.common.enums.ResultEnum;
 import com.zwsj.yypt.system.domain.SysDept;
 import com.zwsj.yypt.system.domain.SysMenuButton;
@@ -23,6 +25,7 @@ public class SysDeptController {
     SysDeptService sysDeptService;
 
     @RequestMapping("")
+//    @Limit(name = "获取部门数", key = "dept", period = 50, count = 1, limitType = LimitType.Token)
     public YyptResponse list(@RequestBody  SysDept sysDept){
        return YyptResponse.success(sysDeptService.getDeptTreeView(sysDept));
     }

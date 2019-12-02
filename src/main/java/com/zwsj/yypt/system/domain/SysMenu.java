@@ -48,8 +48,12 @@ public class SysMenu {
     private String permission;
 
 
+    @TableField("component_name")
+    private String componentName;
 
 
+    @TableField("nocache_flag")
+    private Integer nocacheFlag;
 
 
     @TableField("create_date")

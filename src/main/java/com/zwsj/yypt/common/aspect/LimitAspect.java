@@ -98,7 +98,7 @@ public class LimitAspect {
             if(limitType == LimitType.Token){
                //如果是通过token验证的话,超过频率的话，冻结用户
                 if(StringUtils.isNotEmpty(token)){
-                    String userName = JWTUtil.getUsername(token);
+                    String userName = JWTUtil.getUsername(YyptUtils.decryptToken(token));
                     SysUser sysUser = new SysUser();
                     sysUser.setLockDate(new Date());
                     sysUser.setStatus(2L);

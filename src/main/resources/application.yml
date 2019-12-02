@@ -1,9 +1,9 @@
 spring:
   redis:
-      database: 0
+      database: 1
       host: 127.0.0.1
       port: 6379
-      password: 123456
+      password:
       jedis:
         pool:
           min-idle: 8
@@ -34,15 +34,15 @@ spring:
       datasource:
         main:
           username: root
-          password:
+          password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
          # 数据源-2，名称为 test
-#        test:
-#           username: root
-#           password: 123456
-#           driver-class-name: com.mysql.cj.jdbc.Driver
-#           url: jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        test:
+           username: root
+           password: 123456
+           driver-class-name: com.mysql.cj.jdbc.Driver
+           url: jdbc:mysql://127.0.0.1:3306/drugprice?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
 
 
 

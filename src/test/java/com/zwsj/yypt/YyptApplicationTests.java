@@ -1,5 +1,6 @@
 package com.zwsj.yypt;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zwsj.yypt.common.utils.MD5Utils;
 import com.zwsj.yypt.system.dao.*;
@@ -8,6 +9,7 @@ import com.zwsj.yypt.system.domain.SysRoleUser;
 import com.zwsj.yypt.system.domain.SysUser;
 import com.zwsj.yypt.system.service.SysLoginLogService;
 import com.zwsj.yypt.system.service.SysMenuService;
+import com.zwsj.yypt.system.service.TestService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,6 +49,8 @@ public class YyptApplicationTests {
     @Autowired
     SysLoginLogService sysLoginLogService;
 
+    @Autowired
+    TestService testService;
 
     @Autowired
     SysMenuMapper sysMenuMapper;
@@ -120,6 +126,23 @@ public class YyptApplicationTests {
 //            e.printStackTrace();
 //        }
 
+    }
+
+    @Test
+    @DS("21")
+    public void testJdbc(){
+        this.aa();
+    }
+
+    @DS("456")
+    public void  aa(){
+        List<Map<String, Object>> aa = jdbcTemplate.queryForList("select * from sys_user");
+        System.out.println("----------------------------"+aa.size());
+    }
+
+    @Test
+    public void cc(){
+        testService.testDb("test","select * from store");
     }
 
 

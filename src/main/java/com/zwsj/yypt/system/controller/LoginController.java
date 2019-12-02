@@ -65,8 +65,7 @@ public class LoginController {
     ObjectMapper objectMapper;
 
     @PostMapping("/login")
-    @Limit(key = "login", period = 60, count = 1, name = "登录接口", prefix = "limit")
-    @Log("登陆接口")
+    @Limit(key = "login", period = 60, count = 20, name = "登录接口", prefix = "limit")
     public YyptResponse login(@RequestBody Map<String,String> params, HttpServletRequest request) throws Exception{
         String username = params.get("username");
         if(StringUtils.isBlank(username)){

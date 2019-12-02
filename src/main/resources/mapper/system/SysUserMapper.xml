@@ -18,6 +18,7 @@
         <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
         <result column="roleNames" jdbcType="VARCHAR" property="roleNames" />
         <result column="roleIds" jdbcType="VARCHAR" property="roleIds" />
+        <result column="memo" jdbcType="VARCHAR" property="memo" />
     </resultMap>
 
     <select id="list" resultMap="BaseResultMap" parameterType="sysUser">
@@ -37,16 +38,27 @@
           a.modify_date,
           a.sex,
           GROUP_CONCAT(d.role_id) roleIds,
-          GROUP_CONCAT(d.role_name) roleNames
+          GROUP_CONCAT(d.role_name) roleNames,
+          a.memo
         FROM
             sys_user AS a
         LEFT JOIN sys_dept AS b ON a.dept_id = b.dept_id
         LEFT JOIN sys_role_user AS c ON a.user_id = c.user_id
         LEFT JOIN sys_role d ON  c.role_id = d.role_id
         where 1=1
-        <!--<if test=" userId != null and userId != '' ">-->
-             <!--AND  a.user_id = #{userId}-->
-        <!--</if>-->
+        <if test=" sysUser.userId != null and sysUser.userId != '' ">
+             AND  a.user_id = #{sysUser.userId}
+        </if>
+
+
+        <if test=" sysUser.userName != null and sysUser.userName != '' ">
+            AND  a.user_name = #{sysUser.userName}
+        </if>
+
+
+        <if test=" sysUser.status != null and sysUser.status != '' or sysUser.status ==0 ">
+            AND  a.status = #{sysUser.status}
+        </if>
 
         GROUP BY
             a.user_id,
@@ -97,9 +109,6 @@
             AND  a.user_name = #{sysUser.userName}
         </if>
 
-        <if test=" sysUser.userName != null and sysUser.userName != '' ">
-        AND  a.user_name = #{sysUser.userName}
-        </if>
 
         <if test=" sysUser.status != null and sysUser.status != '' or sysUser.status ==0 ">
             AND  a.status = #{sysUser.status}
