@@ -21,8 +21,8 @@ public class SortUtil {
      * @param camelToUnderscore 是否开启驼峰转下划线
      */
     public static void handlePageSort(QueryRequest request, Page page, String defaultSort, String defaultOrder, boolean camelToUnderscore) {
-        page.setCurrent(request.getPageNum());
         page.setSize(request.getPageSize());
+        page.setCurrent(request.getPageNum());
         String sortField = request.getSortField();
         if (camelToUnderscore) {
             sortField = YyptUtils.camelToUnderscore(sortField);

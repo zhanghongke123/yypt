@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>yypt</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -52,6 +53,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.3.1</version>
         </dependency>
 
         <!-- 引入JDBC  -->
@@ -177,12 +185,21 @@
     </repositories>
 
     <build>
+        <finalName>yypt</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
+
         <!--<resources>-->
             <!--<resource>-->
                 <!--<directory>src/main/resources</directory>-->

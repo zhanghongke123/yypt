@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwsj.yypt.system.dao.SysLogMapper">
+    <resultMap id="BaseResultMap" type="com.zwsj.yypt.system.domain.SysLog">
+
+    </resultMap>
+    
+    <select id="list" resultMap="BaseResultMap" parameterType="sysLog">
+            SELECT
+            a.log_id,
+            a.username,
+            a.operation,
+            a.time,
+            a.method,
+            a.params,
+            a.ip,
+            a.location,
+            a.create_date
+            FROM
+            sys_log a
+            where 1=1
+            <if test=" sysLog.username != null and sysLog.username != '' ">
+                AND  a.username = #{sysLog.username}
+            </if>
+
+            <if test=" sysLog.ip != null and sysLog.ip != '' ">
+                AND  a.ip = #{sysLog.ip}
+            </if>
+
+            <if test=" sysLog.operation != null and sysLog.operation != '' ">
+                AND  a.operation = #{sysLog.operation}
+            </if>
+
+            <if test=" sysLog.method != null and sysLog.method != '' ">
+                AND  a.method = #{sysLog.method}
+            </if>
+
+
+    </select>
+
+</mapper>

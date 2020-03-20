@@ -1,13 +1,20 @@
 package com.zwsj.yypt.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zwsj.yypt.common.annotation.Log;
+import com.zwsj.yypt.common.domain.QueryRequest;
+import com.zwsj.yypt.common.properties.YyptConstant;
 import com.zwsj.yypt.common.utils.AddressUtil;
+import com.zwsj.yypt.common.utils.SortUtil;
 import com.zwsj.yypt.system.dao.SysLogMapper;
 import com.zwsj.yypt.system.domain.SysLog;
+import com.zwsj.yypt.system.domain.SysLoginLog;
 import com.zwsj.yypt.system.service.SysLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
@@ -26,6 +33,7 @@ import java.util.*;
  * @描述
  */
 @Service
+@Slf4j
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLog> implements SysLogService {
 
     @Autowired
@@ -61,6 +69,17 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLog> implemen
         save(log);
     }
 
+    @Override
+    public IPage<SysLog> list(QueryRequest<SysLog> request) {
+        try {
+            Page<SysLog> page = new Page<>();
+            SortUtil.handlePageSort(request, page, "logId",YyptConstant.ORDER_DESC,true);
+            return this.baseMapper.list(page,request.getQuerylist());
+        } catch (Exception e) {
+            log.error("查询登录历史异常", e);
+            return null;
+        }
+    }
 
 
     private StringBuilder handleParams(StringBuilder params, Object[] args, List paramNames) throws JsonProcessingException {
