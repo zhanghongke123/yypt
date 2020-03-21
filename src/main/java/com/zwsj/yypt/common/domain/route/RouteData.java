@@ -16,6 +16,7 @@ public class RouteData {
     private String component;
     private String name;
     private String redirect;
+    private boolean hidden;
     private Meta meta;
     private Long parentid;
     private Long id;

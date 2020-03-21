@@ -43,6 +43,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(UnauthorizedException.class)
     public YyptResponse handle401(UnauthorizedException e) {
+        e.printStackTrace();
         return new YyptResponse().failure(ResultEnum.PERMISSIONS_ERROR,
                 "没有接口的访问权限(" + e.getMessage() + ")");
     }
@@ -145,6 +146,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(Exception.class)
     public YyptResponse globalException(HttpServletRequest request, Throwable ex) {
+        ex.printStackTrace();
         return new YyptResponse().failure(ResultEnum.OTHER_ERROR,
                  ex.getMessage());
     }

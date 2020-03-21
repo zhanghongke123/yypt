@@ -50,6 +50,7 @@ public class TreeUtil {
         List<RouteData> routeDataList = new ArrayList<RouteData>();
         routes.forEach(route ->{
                 RouteData routeData = new RouteData();
+                routeData.setHidden(route.getHiddenFlag() == 1 ? true : false);
                 routeData.setId(route.getMenuId());
                 routeData.setComponent(route.getComponent());
                 Meta meta = new Meta();

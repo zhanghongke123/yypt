@@ -64,6 +64,11 @@ public class SysMenu {
 
 
 
+    @TableField("hidden_flag")
+    private Integer hiddenFlag;
+
+
+
     private transient List<SysMenu> children;
 
 

@@ -12,6 +12,7 @@
         <result column="permission" jdbcType="VARCHAR" property="permission" />
         <result column="component_name" jdbcType="VARCHAR" property="componentName" />
         <result column="nocache_flag" jdbcType="VARCHAR" property="nocacheFlag" />
+        <result column="hidden_flag" jdbcType="VARCHAR" property="hiddenFlag" />
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
         <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
     </resultMap>
