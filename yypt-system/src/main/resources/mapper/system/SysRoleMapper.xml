@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yypt.system.dao.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="com.yypt.system.domain.SysRole">
+            <id column="ROLE_ID" jdbcType="INTEGER" property="roleId" />
+            <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+            <result column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode" />
+            <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+            <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+            <result column="menuids" jdbcType="VARCHAR" property="menuIds" />
+    </resultMap>
+
+    <select id="getUserRoles" resultMap="BaseResultMap" parameterType="long">
+        SELECT
+            distinct  b.ROLE_ID,
+            b.ROLE_NAME,
+            b.ROLE_CODE
+        FROM
+            sys_role_user a
+        LEFT JOIN sys_role b ON a.role_id = b.role_id
+        where a.user_id = #{userId}
+    </select>
+
+
+    <select id="list" resultMap="BaseResultMap" parameterType="SysRole">
+            SELECT
+                a.role_id,
+                a.role_name,
+                a.role_code,
+                a.create_date,
+                a.modify_date,
+                a.memo,
+                GROUP_CONCAT(b.menu_id) menuids
+            FROM
+                sys_role a
+            LEFT JOIN sys_role_menu b ON a.role_id = b.role_id
+            WHERE 1=1
+            <if test=" roleId != null and roleId != ''">
+                and a.role_id = #{roleId}
+            </if>
+            GROUP BY
+                a.memo,
+                a.role_id,
+                a.role_name,
+                a.role_code,
+                a.create_date,
+                a.modify_date
+            ORDER BY a.role_id
+    </select>
+
+
+    
+
+
+
+</mapper>

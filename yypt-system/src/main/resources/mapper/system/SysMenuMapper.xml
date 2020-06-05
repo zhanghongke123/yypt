@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yypt.system.dao.SysMenuMapper">
+    <resultMap id="BaseResultMap" type="com.yypt.system.domain.SysMenu">
+        <id column="menu_id" jdbcType="INTEGER" property="menuId" />
+        <result column="path" jdbcType="VARCHAR" property="path" />
+        <result column="component" jdbcType="VARCHAR" property="component" />
+        <result column="parentid" jdbcType="INTEGER" property="parentid" />
+        <result column="order_code" jdbcType="INTEGER" property="orderCode" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="permission" jdbcType="VARCHAR" property="permission" />
+        <result column="component_name" jdbcType="VARCHAR" property="componentName" />
+        <result column="nocache_flag" jdbcType="VARCHAR" property="nocacheFlag" />
+        <result column="hidden_flag" jdbcType="VARCHAR" property="hiddenFlag" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    </resultMap>
+
+    <select id="getMenusByRoleId" resultMap="BaseResultMap" parameterType="long">
+        SELECT
+            b.*
+        FROM
+            sys_role_menu a
+        LEFT JOIN sys_menu b ON a.menu_id = b.menu_id
+        where a.role_id = #{roleId}
+        AND b.menu_id is not null
+        order by  b.order_code
+    </select>
+    
+    
+    <select id="getAllMenu" resultMap="BaseResultMap">
+        select a.*
+         from sys_menu a
+         order by a.order_code
+    </select>
+
+    
+    <!-- 利用函数找到该节点下面所有的子节点 -->
+    <delete id="deleteMenu" parameterType="long">
+        DELETE FROM sys_menu
+        WHERE menu_id IN (
+		SELECT
+			cc.menu_id
+		FROM
+			(
+				SELECT b.menu_id FROM sys_menu b WHERE FIND_IN_SET( menu_id,findMenuChildren (#{menuId}))
+			) cc
+	     )
+    </delete>
+
+
+
+
+
+</mapper>

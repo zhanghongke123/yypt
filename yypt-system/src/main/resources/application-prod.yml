@@ -36,6 +36,8 @@ spring:
       web-stat-filter:
         enabled: true
     dynamic:
+      # 严格模式
+      strict: true
       p6spy: true
       druid:
         filters: stat
