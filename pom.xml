@@ -2,29 +2,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.yypt</groupId>
+    <artifactId>yypt-parent</artifactId>
+    <version>1.0.0</version>
+    <name>yypt</name>
+    <description>Demo project for Spring Boot</description>
+    <packaging>pom</packaging>
+
+
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.3.RELEASE</version>
+        <version>2.1.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.zwkj</groupId>
-    <artifactId>yypt</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>yypt</name>
-    <description>Demo project for Spring Boot</description>
-    <packaging>war</packaging>
+
+    <modules>
+        <module>yypt-system</module>
+    </modules>
+
+
+
 
     <properties>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <jwt.version>3.4.1</jwt.version>
         <mybatis.version>1.3.2</mybatis.version>
-        <shiro-spring.version>1.3.2</shiro-spring.version>
+        <shiro-spring.version>1.4.0</shiro-spring.version>
         <fastjson.version>1.2.31</fastjson.version>
         <commons.version>2.6</commons.version>
         <ip2region.version>1.7</ip2region.version>
         <shiro-redis.version>3.1.0</shiro-redis.version>
-        <mybatis-plus.version>3.1.0</mybatis-plus.version>
+        <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <mybatis-plus.gen.version>3.1.0</mybatis-plus.gen.version>
+        <blade-patchca.version>1.1.0</blade-patchca.version>
+        <druid.version>1.1.17</druid.version>
     </properties>
 
     <dependencies>
@@ -59,7 +74,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.1</version>
+            <version>3.3.2</version>
         </dependency>
 
         <!-- 引入JDBC  -->
@@ -88,6 +103,12 @@
             <version>${jwt.version}</version>
         </dependency>
 
+        <!-- 图片验证码生成  -->
+        <dependency>
+            <groupId>com.bladejava</groupId>
+            <artifactId>blade-patchca</artifactId>
+            <version>${blade-patchca.version}</version>
+        </dependency>
 
         <!-- sql 打印 -->
         <dependency>
@@ -100,20 +121,29 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>2.5.1</version>
+            <version>3.1.1</version>
         </dependency>
 
-
+        <!-- mybatis-plus  -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
+
+        <!-- Druid  -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+
         <!-- 代码生成器 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <version>${mybatis-plus.gen.version}</version>
         </dependency>
 
         <!-- freemaker引擎 -->
@@ -167,10 +197,18 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons.version}</version>
+        </dependency>
+
+        <!--  定时任务依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
 
     </dependencies>
