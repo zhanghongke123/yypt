@@ -18,7 +18,6 @@ import java.util.List;
  * @描述
  */
 @Service
-@DS("salve_1")
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper,SysDept> implements SysDeptService {
     @Override
     public List<SysDept> getDeptTreeView(SysDept sysDept) {

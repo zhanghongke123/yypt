@@ -12,10 +12,8 @@ import java.util.List;
  * @描述
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
-    @DS("salve_1")
     List<SysRole> getUserRoles(Long userId);
 
-    @DS("salve_1")
     List<SysRole> list(SysRole sysRole);
 
 
