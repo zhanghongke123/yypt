@@ -1,6 +1,7 @@
 package com.yypt.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yypt.common.domain.EleTreeData;
 import com.yypt.common.domain.QueryRequest;
@@ -14,6 +15,7 @@ import com.yypt.system.service.SysDeptService;
 import com.yypt.system.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,6 +94,33 @@ public class SysUserController  {
 
         return YyptResponse.success("更新成功");
     }
+
+
+    @PostMapping("/respassword")
+    @Transactional(rollbackFor = Exception.class)
+    public YyptResponse respassword(@RequestBody SysUser sysUser) throws Exception {
+        String username = sysUser.getUserName();
+        String password = sysUser.getUserPassword();
+        if(StringUtils.isEmpty(username)){
+            throw  new Exception("用户名不能为空");
+        }
+
+        if(StringUtils.isEmpty(password)){
+            throw  new Exception("密码不能为空");
+        }
+        String md5password = MD5Utils.encrypt(username,password);
+        sysUser.setUserPassword(md5password);
+        LambdaUpdateWrapper<SysUser> sysuerWheres = new LambdaUpdateWrapper<>();
+        sysuerWheres.eq(SysUser::getUserId,sysUser.getUserId());
+        SysUser updateUser = new SysUser();
+        updateUser.setUserPassword(md5password);
+        sysUserService.update(updateUser,sysuerWheres);
+
+        return YyptResponse.success("重置密码成功");
+    }
+
+
+
 
 //    @PostMapping("")
 //    public YyptResponse add(@RequestBody SysUser sysUser){

@@ -57,8 +57,11 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir")+"/yypt-system";
         globalConfig.setOutputDir(projectPath + "/src/main/java");
         globalConfig.setAuthor(AUTHOR);
+        globalConfig.setServiceName("%sService");
         globalConfig.setOpen(false);
         globalConfig.setFileOverride(false);
+        globalConfig.setBaseResultMap(true);
+        globalConfig.setBaseColumnList(true);
         generator.setGlobalConfig(globalConfig);
 
         // 数据源配置
@@ -85,7 +88,14 @@ public class CodeGenerator {
         templateConfig.setService(SERVICE_TEMPLATE_PATH);
         templateConfig.setServiceImpl(SERVICE_IMPL_TEMPLATE_PATH);
         templateConfig.setController(CONTROLLER_TEMPLATE_PATH);
+
+
+
         generator.setTemplate(templateConfig);
+
+
+
+
 
 
 
