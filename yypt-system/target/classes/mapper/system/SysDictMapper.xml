@@ -16,7 +16,7 @@
         </if>
 
         <if test="query.dictName != null and query.dictName != ''">
-            and a.dict_name = #{query.dictName}
+            and LIKE concat(concat('%',#{query.dictName}),'%')
         </if>
 
     </select>
