@@ -117,7 +117,7 @@ spring:
         slave_1:
           username: wms7001beta
           password: wms7001beta
-          url: jdbc:oracle:thin:@222.128.47.103:1522:OSGC
+          url: jdbc:oracle:thin:@111.128.47.103:1522:OSGC
           driver-class-name: oracle.jdbc.OracleDriver
           druid:
             initial-size: 6
