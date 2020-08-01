@@ -2,13 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.yypt</groupId>
-    <artifactId>yypt-parent</artifactId>
-    <version>1.0.0</version>
-    <name>yypt</name>
-    <description>Demo project for Spring Boot</description>
-    <packaging>pom</packaging>
-
 
 
     <parent>
@@ -18,9 +11,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <modules>
-        <module>yypt-system</module>
-    </modules>
+    <groupId>com.yypt</groupId>
+    <artifactId>yypt</artifactId>
+    <version>1.0.0</version>
+    <name>war</name>
+    <description>Demo project for Spring Boot</description>
+    <packaging>war</packaging>
+
+
+
 
 
 
@@ -216,6 +215,15 @@
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.osgc</groupId>
+            <artifactId>oracle</artifactId>
+            <version>6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 
@@ -230,10 +238,10 @@
     <build>
         <finalName>yypt</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -241,6 +249,27 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
+                            <includeScope>system</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
 
         <!--<resources>-->
