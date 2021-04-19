@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @创建人 zhk
@@ -19,6 +20,10 @@ import java.util.List;
  */
 @Service
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper,SysDept> implements SysDeptService {
+
+    List<SysDept> childdept ;
+
+
     @Override
     public List<SysDept> getDeptTreeView(SysDept sysDept) {
         List<SysDept> sysDepts = this.baseMapper.selectList(null);
@@ -67,7 +72,34 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper,SysDept> imple
     @Override
     public void delte(Long deptId) throws Exception{
         //递归删除部门下面的部门
-        this.baseMapper.deleteBy(deptId);
+        if(deptId == 0){
+            throw  new Exception("最高级部门不可删除");
+        }
+        childdept = new ArrayList<>();
+        List<SysDept> sysDeptList = this.list();
+        List<SysDept> childrenList = this.getAllChildren(sysDeptList,deptId);
+        List<Long> childrenIds = childrenList.stream().map(dept -> dept.getDeptId()).collect(Collectors.toList());
+        childrenIds.add(deptId);
+        this.baseMapper.deleteBatchIds(childrenIds);
+    }
+
+
+
+
+    /**
+     * 获取当前部门下面的所有子部门
+     * @param depts
+     * @param parentid
+     * @return
+     */
+    public List<SysDept> getAllChildren(List<SysDept> depts, Long parentid){
+        for (SysDept sysdept:depts) {
+            if(sysdept.getParentid() == parentid){
+                getAllChildren(depts,sysdept.getDeptId());
+                childdept.add(sysdept);
+            }
+        }
+        return childdept;
     }
 
 

@@ -5,7 +5,9 @@
 
     
     <!-- 利用函数找到该节点下面所有的子节点 -->
-    <delete id="deleteBy" parameterType="long">
+
+	<!--
+	<delete id="deleteBy" parameterType="long">
         DELETE FROM sys_dept
         WHERE dept_id IN (
 		SELECT
@@ -16,6 +18,7 @@
 			) cc
 	     )
     </delete>
+    -->
 
 
 

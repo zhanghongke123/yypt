@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yypt.system.dao.SysMenuButtonMapper;
 import com.yypt.system.dao.SysMenuMapper;
 import com.yypt.system.dao.SysRoleMenuMapper;
+import com.yypt.system.domain.SysDept;
 import com.yypt.system.domain.SysMenu;
 import com.yypt.system.domain.SysMenuButton;
 import com.yypt.system.domain.SysRoleMenu;
 import com.yypt.system.service.SysMenuService;
+import net.sf.saxon.expr.instruct.ForEach;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @创建人 zhk
@@ -24,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenu> implements SysMenuService {
+
+    List<SysMenu> childrenMenus;
 
     @Autowired
     SysMenuMapper sysMenuMapper;
@@ -101,10 +106,29 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenu> imple
     }
 
     @Override
-    public void deleteMenu(SysMenu sysMenu){
+    public void deleteMenu(SysMenu sysMenu) throws Exception{
         //要删除下面的该节点，和该节点下面的所有子节点
         Long menuId = sysMenu.getMenuId();
-        sysMenuMapper.deleteMenu(menuId);
+        if(menuId == 0){
+            throw  new Exception("顶级目录不可删除");
+        }
+
+        childrenMenus = new ArrayList<>();
+        List<SysMenu> sysMenuList = this.list();
+        List<SysMenu> childrenList = this.getAllChildren(sysMenuList,menuId);
+        List<Long> childrenIds = childrenList.stream().map(dept -> dept.getMenuId()).collect(Collectors.toList());
+        childrenIds.add(menuId);
+
+        //删除对应的按钮
+        for (Long menuid: childrenIds) {
+            LambdaQueryWrapper<SysMenuButton> sysMenuButtonLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysMenuButtonLambdaQueryWrapper.eq(SysMenuButton::getMenuId,menuid);
+            this.sysMenuButtonMapper.delete(sysMenuButtonLambdaQueryWrapper);
+        }
+
+
+        this.baseMapper.deleteBatchIds(childrenIds);
+//        sysMenuMapper.deleteMenu(menuId);
 
     }
 
@@ -130,6 +154,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenu> imple
             sysRoleMenuMapper.insert(newsysRoleMenu);
         }
 
+    }
+
+
+
+    /**
+     * 获取当前菜单下面的所有子菜单
+     * @param menus
+     * @param parentid
+     * @return
+     */
+    public List<SysMenu> getAllChildren(List<SysMenu> menus, Long parentid){
+        for (SysMenu sysMenu:menus) {
+            if(sysMenu.getParentid() == parentid){
+                getAllChildren(menus,sysMenu.getMenuId());
+                childrenMenus.add(sysMenu);
+            }
+        }
+        return childrenMenus;
     }
 
 

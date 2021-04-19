@@ -39,7 +39,7 @@ public class SysMenuController {
     }
 
     @PostMapping("/delete")
-    public YyptResponse delete(@RequestBody SysMenu sysMenu) {
+    public YyptResponse delete(@RequestBody SysMenu sysMenu) throws Exception {
         Long menuId = sysMenu.getMenuId();
         if(menuId == null){
             return YyptResponse.failure(ResultEnum.PASSWORD_ERROR,"ID不能为空");

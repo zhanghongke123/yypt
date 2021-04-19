@@ -26,7 +26,7 @@ public interface SysMenuService extends IService<SysMenu> {
     SysMenu updateOrAdd(SysMenu sysMenu);
 
     @Transactional
-    void deleteMenu(SysMenu sysMenu);
+    void deleteMenu(SysMenu sysMenu) throws Exception;
 
     @Transactional
     void saveRoleMenu(Long roleId, String menuids);

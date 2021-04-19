@@ -10,5 +10,5 @@ import com.yypt.system.domain.SysDept;
  * @描述
  */
 public interface SysDeptMapper extends BaseMapper<SysDept> {
-    void deleteBy(Long deptId);
+//    void deleteBy(Long deptId);
 }
