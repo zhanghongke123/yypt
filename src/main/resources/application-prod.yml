@@ -1,44 +1,9 @@
 spring:
-
-  ## quartz定时任务,采用数据库方式
-  quartz:
-    job-store-type: jdbc
-    initialize-schema: embedded
-    #设置自动启动，默认为 true
-    auto-startup: true
-    #启动时更新己存在的Job
-    overwrite-existing-jobs: true
-    properties:
-      org:
-        quartz:
-          scheduler:
-            instanceName: MyScheduler
-            instanceId: AUTO
-          jobStore:
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-            tablePrefix: QRTZ_
-            isClustered: true
-            misfireThreshold: 60000
-            clusterCheckinInterval: 10000
-          threadPool:
-            class: org.quartz.simpl.SimpleThreadPool
-            threadCount: 10
-            threadPriority: 5
-            threadsInheritContextClassLoaderOfInitializingThread: true
-
-  #aop
-  aop:
-    proxy-target-class: true
-  #序列化配置
-  jackson:
-      date-format: yyyy-MM-dd HH:mm:ss
-      time-zone: GMT+8
   #Redis
   redis:
     host: 127.0.0.1
     port: 6379
-    password:
+    password: 123456
     database: 2
     jedis:
       pool:
@@ -114,13 +79,13 @@ spring:
           druid: #这里可以重写默认值
             initial-size: 5
 #            public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKUVA/IL/iON8f63bv2i/pIAK+1sXY228slLkTKrI9axwBMIoPV7+PqdRTv6uqMl3j6nei0EDBWEu/Wp/qOQ/ScCAwEAAQ==
-        slave_1:
-          username: wms7001beta
-          password: wms7001beta
-          url: jdbc:oracle:thin:@111.128.47.103:1522:OSGC
-          driver-class-name: oracle.jdbc.OracleDriver
-          druid:
-            initial-size: 6
+#        slave_1:
+#          username: wms7001beta
+#          password: wms7001beta
+#          url: jdbc:oracle:thin:@111.128.47.103:1522:OSGC
+#          driver-class-name: oracle.jdbc.OracleDriver
+#          druid:
+#            initial-size: 6
 #        slave_2:
 #          username: sa
 #          password: "123456"
@@ -138,18 +103,6 @@ logging:
   level:
     com.baomidou: debug
     org.springframework.jdbc.datasource.init: debug
-
-
-#mybatis-plus配置
-mybatis-plus:
-    configuration:
-        jdbc-type-for-null: null
-    global-config:
-        banner: false
-    mapper-locations: classpath:mapper/*/*.xml
-    type-aliases-package: com.yypt.*.domain
-
-
 
 yypt:
     openAopLog: true

@@ -1,6 +1,7 @@
 package com.yypt.common.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yypt.common.domain.QueryRequest;
 import com.yypt.common.properties.YyptConstant;
@@ -33,15 +34,16 @@ public class SortUtil {
                 && !StringUtils.equalsIgnoreCase(request.getSortField(), "undefined")
                 && !StringUtils.equalsIgnoreCase(request.getSortOrder(), "undefined")) {
             if (StringUtils.equals(request.getSortOrder(), YyptConstant.ORDER_DESC))
-                page.setDesc(sortField);
+                page.addOrder(new OrderItem(sortField,false));
             else
-                page.setAsc(sortField);
+                page.addOrder(new OrderItem(sortField,true));
         } else {
             if (StringUtils.isNotBlank(defaultSort)) {
-                if (StringUtils.equals(defaultOrder, YyptConstant.ORDER_DESC))
-                    page.setDesc(defaultSort);
-                else
-                    page.setAsc(defaultSort);
+                if (StringUtils.equals(defaultOrder, YyptConstant.ORDER_DESC)){
+                    page.addOrder(new OrderItem(defaultSort,false));
+                } else {
+                    page.addOrder(new OrderItem(defaultSort, true));
+                }
             }
         }
     }

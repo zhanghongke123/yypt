@@ -1,3 +1,51 @@
 spring:
   profiles:
     active: prod
+
+  #aop
+  aop:
+    proxy-target-class: true
+  #序列化配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  ## quartz定时任务,采用数据库方式
+  quartz:
+    job-store-type: jdbc
+    initialize-schema: embedded
+    #设置自动启动，默认为 true
+    auto-startup: true
+    #启动时更新己存在的Job
+    overwrite-existing-jobs: true
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: MyScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            misfireThreshold: 60000
+            clusterCheckinInterval: 10000
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+
+  #排除依赖
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+
+#mybatis-plus配置
+mybatis-plus:
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    banner: false
+  mapper-locations: classpath:mapper/*/*.xml
+  type-aliases-package: com.yypt.*.domain

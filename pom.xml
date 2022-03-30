@@ -14,15 +14,9 @@
     <groupId>com.yypt</groupId>
     <artifactId>yypt</artifactId>
     <version>1.0.0</version>
-    <name>war</name>
-    <description>Demo project for Spring Boot</description>
-    <packaging>war</packaging>
-
-
-
-
-
-
+    <name>yypt</name>
+    <description>yypt</description>
+    <packaging>jar</packaging>
 
     <properties>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -35,8 +29,8 @@
         <commons.version>2.6</commons.version>
         <ip2region.version>1.7</ip2region.version>
         <shiro-redis.version>3.1.0</shiro-redis.version>
-        <mybatis-plus.version>3.1.2</mybatis-plus.version>
-        <mybatis-plus.gen.version>3.1.0</mybatis-plus.gen.version>
+        <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <mybatis-plus.gen.version>3.5.1</mybatis-plus.gen.version>
         <blade-patchca.version>1.1.0</blade-patchca.version>
         <druid.version>1.1.17</druid.version>
     </properties>
@@ -238,10 +232,13 @@
     <build>
         <finalName>yypt</finalName>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -249,42 +246,36 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
-                            <includeScope>system</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimiter>${resource.delimiter}</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>db</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
             </plugin>
-
-
         </plugins>
 
-        <!--<resources>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<filtering>true</filtering>-->
-            <!--</resource>-->
-            <!--<resource>-->
-                <!--<directory>src/main/java</directory>-->
-                <!--<includes>-->
-                    <!--<include>**/*.xml</include>-->
-                    <!--<include>**/*.json</include>-->
-                <!--</includes>-->
-            <!--</resource>-->
-        <!--</resources>-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>com/yypt/**/mapper/xml/**.xml</include>
+                    <include>**/*.json</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>

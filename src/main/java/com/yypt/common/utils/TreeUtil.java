@@ -1,6 +1,7 @@
 package com.yypt.common.utils;
 
 
+
 import com.yypt.common.domain.EleTreeData;
 import com.yypt.common.domain.route.Meta;
 import com.yypt.common.domain.route.RouteData;
@@ -48,21 +49,21 @@ public class TreeUtil {
 
         List<RouteData> routeDataList = new ArrayList<RouteData>();
         routes.forEach(route ->{
-                RouteData routeData = new RouteData();
-                routeData.setHidden(route.getHiddenFlag() == 1 ? true : false);
-                routeData.setId(route.getMenuId());
-                routeData.setComponent(route.getComponent());
-                Meta meta = new Meta();
-                meta.setNoCache(route.getNocacheFlag() == 1 ? true : false);
-                meta.setIcon(route.getIcon());
-                meta.setTitle(route.getName());
-                meta.setButtons(menubuttonMap.get(route.getMenuId()));
-                routeData.setMeta(meta);
-                routeData.setName(route.getComponentName());
-                routeData.setParentid(route.getParentid());
-                routeData.setPath(route.getPath());
-                routeData.setRedirect(route.getRedirect());
-                routeDataList.add(routeData);
+            RouteData routeData = new RouteData();
+            routeData.setHidden(route.getHiddenFlag() == 1 ? true : false);
+            routeData.setId(route.getMenuId());
+            routeData.setComponent(route.getComponent());
+            Meta meta = new Meta();
+            meta.setNoCache(route.getNocacheFlag() == 1 ? true : false);
+            meta.setIcon(route.getIcon());
+            meta.setTitle(route.getName());
+            meta.setButtons(menubuttonMap.get(route.getMenuId()));
+            routeData.setMeta(meta);
+            routeData.setName(route.getComponentName());
+            routeData.setParentid(route.getParentid());
+            routeData.setPath(route.getPath());
+            routeData.setRedirect(route.getRedirect());
+            routeDataList.add(routeData);
         });
 
         List<RouteData> topRoutes = new ArrayList<>();
@@ -76,7 +77,7 @@ public class TreeUtil {
 
             for (RouteData parent : routeDataList) {
                 Long id = parent.getId();
-                if (id != null && id == parentId) {
+                if (id != null && id.longValue() == parentId.longValue()) {
                     if (parent.getChildren() == null){
                         parent.initChildren();
                     }
@@ -95,8 +96,8 @@ public class TreeUtil {
      * 用于构建饿了吗树组件的数据
      * @return
      */
-    public static <T> List<EleTreeData> buildElemTree(List<T> objectList,String idName,
-                                                      String labeltemplate,String parentIdName) {
+    public static <T> List<EleTreeData> buildElemTree(List<T> objectList, String idName,
+                                                      String labeltemplate, String parentIdName) {
         if (CollectionUtils.isEmpty(objectList)) {
             return null;
         }
@@ -115,6 +116,7 @@ public class TreeUtil {
 
         List<EleTreeData> topData = new ArrayList<>();
         eleTreeDataList.forEach(data -> {
+
             Long parentId = data.getParentId();
             if (parentId == null || TOP_NODE_ID == parentId) {
                 topData.add(data);
@@ -123,7 +125,7 @@ public class TreeUtil {
 
             for (EleTreeData parent : eleTreeDataList) {
                 Long id = parent.getId();
-                if (id != null && id == parentId) {
+                if (id != null && id.longValue() == parentId.longValue()) {
                     if (parent.getChildren() == null){
                         parent.initChildren();
                     }

@@ -16,7 +16,6 @@ import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import java.io.PrintWriter;
 @Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
-    public static final String TOKEN = "Authentication_TOKEN";
+    public static final String TOKEN = "token";
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 

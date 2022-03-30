@@ -1,15 +1,17 @@
 package com.yypt;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +25,7 @@ import java.util.Scanner;
 public class CodeGenerator {
 
     // 数据库 URL
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://192.168.22.182:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     // 数据库驱动
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // 数据库用户名
@@ -50,104 +52,43 @@ public class CodeGenerator {
     private static final String CONTROLLER_TEMPLATE_PATH = "generator/templates/controller.java";
 
     public static void main(String[] args) {
-        AutoGenerator generator = new AutoGenerator();
 
-        // 全局配置
-        GlobalConfig globalConfig = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir")+"/yypt-system";
-        globalConfig.setOutputDir(projectPath + "/src/main/java");
-        globalConfig.setAuthor(AUTHOR);
-        globalConfig.setServiceName("%sService");
-        globalConfig.setOpen(false);
-        globalConfig.setFileOverride(false);
-        globalConfig.setBaseResultMap(true);
-        globalConfig.setBaseColumnList(true);
-        generator.setGlobalConfig(globalConfig);
+        FastAutoGenerator.create(URL,USERNAME,PASSWORD)
+                .globalConfig(builder -> {
+                    String projectPath = System.getProperty("user.dir");
+                    builder.author(AUTHOR)
+                            .enableSwagger()
+                            .disableOpenDir()
+                            .outputDir(projectPath + "/src/main/java");
+                })
+                .packageConfig(builder -> {
+                    builder.parent("com.yypt")
+                            .moduleName("busi")
+                            .entity("domain")
+                            .service("service")
+                            .serviceImpl("service.impl")
+                            .mapper("dao")
+                            .xml("mapper.xml")
+                            .controller("controller");
 
-        // 数据源配置
-        DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(URL);
-        dataSourceConfig.setDriverName(DRIVER_NAME);
-        dataSourceConfig.setUsername(USERNAME);
-        dataSourceConfig.setPassword(PASSWORD);
-        generator.setDataSource(dataSourceConfig);
+                })
+                .templateConfig(builder -> {
+                    builder.entity(ENTITY_TEMPLATE_PATH)
+                            .service(SERVICE_TEMPLATE_PATH)
+                            .serviceImpl(SERVICE_IMPL_TEMPLATE_PATH)
+                            .mapper(MAPPER_TEMPLATE_PATH)
+                            .mapperXml(XML_MAPPER_TEMPLATE_PATH)
+                            .controller(CONTROLLER_TEMPLATE_PATH);
+                })
+                .strategyConfig(builder -> {
+                    builder.addInclude("erp_goods")
+                            .entityBuilder().enableLombok()
+                            .controllerBuilder().enableRestStyle()
+                            .serviceBuilder().formatServiceFileName("%sService").formatServiceImplFileName("%sServiceImpl");
+                })
+                .templateEngine(new FreemarkerTemplateEngine())
+                .execute();
 
-        // 包配置
-        PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setModuleName(scanner("模块"));
-        packageConfig.setParent(BASE_PACKAGE_URL);
-        packageConfig.setEntity("domain");
-        packageConfig.setMapper("dao");
-        generator.setPackageInfo(packageConfig);
-
-        // 配置自定义代码模板
-        TemplateConfig templateConfig = new TemplateConfig();
-        templateConfig.setXml(XML_MAPPER_TEMPLATE_PATH);
-        templateConfig.setMapper(MAPPER_TEMPLATE_PATH);
-        templateConfig.setEntity(ENTITY_TEMPLATE_PATH);
-        templateConfig.setService(SERVICE_TEMPLATE_PATH);
-        templateConfig.setServiceImpl(SERVICE_IMPL_TEMPLATE_PATH);
-        templateConfig.setController(CONTROLLER_TEMPLATE_PATH);
-
-
-
-        generator.setTemplate(templateConfig);
-
-
-
-
-
-
-
-        // 自定义配置
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-            }
-        };
-
-        // 自定义输出配置
-        List<FileOutConfig> focList = new ArrayList<>();
-        // 自定义配置会被优先输出
-        focList.add(new FileOutConfig(templateConfig.getXml()+".ftl") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + packageConfig.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
-            }
-        });
-
-
-
-        focList.add(new FileOutConfig(templateConfig.getMapper()+".ftl") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + packageConfig.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
-            }
-        });
-
-
-        cfg.setFileOutConfigList(focList);
-        generator.setCfg(cfg);
-
-
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(true);
-        strategy.setInclude(scanner("表名"));
-        strategy.setSuperEntityColumns("id");
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
-        generator.setStrategy(strategy);
-        generator.setTemplateEngine(new FreemarkerTemplateEngine());
-        generator.execute();
     }
 
     private static String scanner(String tip) {
