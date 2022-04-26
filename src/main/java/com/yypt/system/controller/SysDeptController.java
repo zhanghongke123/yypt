@@ -1,14 +1,19 @@
 package com.yypt.system.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yypt.common.annotation.Log;
+import com.yypt.common.domain.QueryRequest;
 import com.yypt.common.domain.YyptResponse;
 import com.yypt.common.enums.ResultEnum;
 import com.yypt.system.domain.SysDept;
+import com.yypt.system.domain.SysTenant;
 import com.yypt.system.service.SysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @创建人 zhk
@@ -43,5 +48,11 @@ public class SysDeptController {
         }
         sysDeptService.delte(deptId);
         return YyptResponse.success("删除成功");
+    }
+
+    @RequestMapping("etlList")
+    public YyptResponse list(@RequestBody QueryRequest<SysDept> queryRequest){
+        Page<Map> mapPage = sysDeptService.pageMap(queryRequest);
+        return YyptResponse.success(mapPage);
     }
 }

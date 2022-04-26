@@ -5,6 +5,9 @@ import com.yypt.common.domain.QueryRequest;
 import com.yypt.system.domain.SysDict;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yypt.system.domain.SysLog;
+import com.yypt.system.vo.DictVO;
+
+import java.util.List;
 
 /**
  * @author ZHK
@@ -12,4 +15,7 @@ import com.yypt.system.domain.SysLog;
 public interface SysDictService extends IService<SysDict> {
 
     IPage<SysDict> list(QueryRequest<SysDict> request);
+
+    List<DictVO> codeInfo(String dictCode) ;
+
 }

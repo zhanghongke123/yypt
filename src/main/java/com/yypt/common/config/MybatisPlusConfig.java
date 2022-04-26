@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 
 @Configuration
-@MapperScan(value = {"com.yypt.*.dao"})
+@MapperScan(value = {"com.yypt.*.dao","com.yypt.*.mapper"})
 public class MybatisPlusConfig {
 
     /**
@@ -20,5 +20,8 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
+
+
+
 
 }

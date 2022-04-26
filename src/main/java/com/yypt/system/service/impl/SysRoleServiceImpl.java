@@ -9,6 +9,7 @@ import com.yypt.common.properties.YyptConstant;
 import com.yypt.common.utils.SortUtil;
 import com.yypt.system.dao.*;
 import com.yypt.system.domain.*;
+import com.yypt.system.mapper.SysUserMapper;
 import com.yypt.system.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

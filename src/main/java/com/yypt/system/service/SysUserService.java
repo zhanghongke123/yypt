@@ -1,12 +1,15 @@
 package com.yypt.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yypt.common.domain.QueryRequest;
 import com.yypt.system.domain.SysRole;
+import com.yypt.system.domain.SysTenant;
 import com.yypt.system.domain.SysUser;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @创建人 zhk
@@ -15,9 +18,6 @@ import java.util.List;
  */
 
 public interface SysUserService extends IService<SysUser> {
-
-    // 用户列表
-    IPage<SysUser> list(QueryRequest<SysUser> request);
 
 
 
@@ -45,6 +45,5 @@ public interface SysUserService extends IService<SysUser> {
     void del(SysUser sysUser);
 
 
-
-
+    Page<Map> pageMap(QueryRequest<SysUser> queryRequest);
 }

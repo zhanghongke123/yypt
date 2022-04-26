@@ -1,8 +1,14 @@
 package com.yypt.system.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yypt.system.dao.SysDeptMapper;
+import com.yypt.common.domain.QueryRequest;
+import com.yypt.common.properties.YyptConstant;
+import com.yypt.common.utils.Condition;
+import com.yypt.common.utils.SortUtil;
+import com.yypt.system.domain.SysTenant;
+import com.yypt.system.mapper.SysDeptMapper;
 import com.yypt.system.domain.SysDept;
 import com.yypt.system.service.SysDeptService;
 import org.springframework.stereotype.Service;
@@ -11,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -83,7 +90,17 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper,SysDept> imple
         this.baseMapper.deleteBatchIds(childrenIds);
     }
 
-
+    @Override
+    public Page<Map> pageMap(QueryRequest<SysDept> queryRequest) {
+        SysDept querylist = queryRequest.getQuerylist();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (querylist != null) {
+            queryWrapper = Condition.getQueryWrapper(queryRequest.getQuerylist(),false);
+        }
+        Page page = new Page();
+        SortUtil.handlePageSort(queryRequest,page,"deptId", YyptConstant.ORDER_DESC,true);
+        return this.baseMapper.pageMap(page , queryWrapper);
+    }
 
 
     /**

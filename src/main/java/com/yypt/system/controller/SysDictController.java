@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -51,6 +52,11 @@ public class SysDictController {
     public YyptResponse delete(@RequestBody SysDict request){
         sysDictService.removeById(request.getDictId());
         return YyptResponse.success("删除成功");
+    }
+
+    @RequestMapping("codeInfo")
+    public YyptResponse codeInfo(@RequestParam String dictCode)  {
+        return YyptResponse.success(sysDictService.codeInfo(dictCode));
     }
 
 

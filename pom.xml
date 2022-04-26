@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.yypt</groupId>
-    <artifactId>yypt</artifactId>
+    <artifactId>yypt-server</artifactId>
     <version>1.0.0</version>
-    <name>yypt</name>
-    <description>yypt</description>
+    <name>yypt-server</name>
+    <description>yypt-server</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -32,7 +32,7 @@
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <mybatis-plus.gen.version>3.5.1</mybatis-plus.gen.version>
         <blade-patchca.version>1.1.0</blade-patchca.version>
-        <druid.version>1.1.17</druid.version>
+        <druid.version>1.1.21</druid.version>
     </properties>
 
     <dependencies>
@@ -218,6 +218,12 @@
             <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.16</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -230,7 +236,7 @@
     </repositories>
 
     <build>
-        <finalName>yypt</finalName>
+        <finalName>yypt-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

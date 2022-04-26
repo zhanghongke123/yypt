@@ -123,6 +123,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public String set(String key, String value, Long milliscends) throws RedisConnectException {
+        key = key.toLowerCase();
         String result = this.set(key.toLowerCase(), value);
         this.pexpire(key, milliscends);
         return result;

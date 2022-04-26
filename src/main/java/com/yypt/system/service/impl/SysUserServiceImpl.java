@@ -1,16 +1,19 @@
 package com.yypt.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yypt.common.domain.QueryRequest;
 import com.yypt.common.properties.YyptConstant;
+import com.yypt.common.utils.Condition;
 import com.yypt.common.utils.MD5Utils;
 import com.yypt.common.utils.SortUtil;
 import com.yypt.system.dao.SysRoleMapper;
 import com.yypt.system.dao.SysRoleUserMapper;
-import com.yypt.system.dao.SysUserMapper;
+import com.yypt.system.domain.SysTenant;
+import com.yypt.system.mapper.SysUserMapper;
 import com.yypt.system.domain.SysRole;
 import com.yypt.system.domain.SysUser;
 import com.yypt.system.service.SysUserService;
@@ -20,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @创建人 zhk
@@ -88,7 +93,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
 
 
-            sysUser.setModifyDate(new Date());
+            sysUser.setUpdateTime(LocalDateTime.now());
             this.baseMapper.updateById(sysUser);
         }else{
             //判断用户名是否重复
@@ -108,8 +113,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 
             String password = MD5Utils.encrypt("123456",sysUser.getUserName());
 
-            sysUser.setModifyDate(new Date());
-            sysUser.setCreateDate(new Date());
+            sysUser.setCreateTime(LocalDateTime.now());
+            sysUser.setUpdateTime(LocalDateTime.now());
             this.baseMapper.insert(sysUser);
         }
         return null;
@@ -133,18 +138,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         this.baseMapper.deleteById(sysUser.getUserId());
     }
 
-
     @Override
-    public IPage<SysUser> list(QueryRequest<SysUser> request) {
-        try {
-            Page<SysUser> page = new Page<>();
-            SortUtil.handlePageSort(request, page, "userId",YyptConstant.ORDER_DESC,true);
-            return this.sysUserMapper.list(page,request.getQuerylist());
-        } catch (Exception e) {
-            log.error("查询用户异常", e);
-            return null;
+    public Page<Map> pageMap(QueryRequest<SysUser> queryRequest) {
+        SysUser querylist = queryRequest.getQuerylist();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (querylist != null) {
+            queryWrapper = Condition.getQueryWrapper(queryRequest.getQuerylist(),false);
         }
+        Page page = new Page();
+        SortUtil.handlePageSort(queryRequest,page,"userId", YyptConstant.ORDER_DESC,true);
+        return this.baseMapper.pageMap(page , queryWrapper);
     }
+
+
 
 
 

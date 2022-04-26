@@ -124,11 +124,11 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new YyptAuthorizedException(ResultEnum.PARAMETER_ERROR);
         }
 
-        if(user.getStatus() == 0){
+        if("0".equals(user.getStatus())){
            throw  new YyptAuthorizedException(ResultEnum.USER_STOP);
         }
 
-        if(user.getStatus() == 2){
+        if("2".equals(user.getStatus())){
             throw  new YyptAuthorizedException(ResultEnum.USER_LOCK);
         }
         return new SimpleAuthenticationInfo(token, token, getName());

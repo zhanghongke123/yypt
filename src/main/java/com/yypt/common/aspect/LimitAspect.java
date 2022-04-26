@@ -9,7 +9,7 @@ import com.yypt.common.enums.LimitType;
 import com.yypt.common.exception.LimitAccessException;
 import com.yypt.common.utils.IPUtil;
 import com.yypt.common.utils.YyptUtils;
-import com.yypt.system.dao.SysUserMapper;
+import com.yypt.system.mapper.SysUserMapper;
 import com.yypt.system.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +29,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -99,8 +100,8 @@ public class LimitAspect {
                 if(StringUtils.isNotEmpty(token)){
                     String userName = JWTUtil.getUsername(YyptUtils.decryptToken(token));
                     SysUser sysUser = new SysUser();
-                    sysUser.setLockDate(new Date());
-                    sysUser.setStatus(2L);
+                    sysUser.setLockDate(LocalDateTime.now());
+                    sysUser.setStatus("2");
                     String memo = " 接口 %s 方法 %s 超过访问频率 将用户进行冻结" ;
                     sysUser.setMemo(String.format(memo,name,method.getName()));
                     LambdaQueryWrapper<SysUser> updateWhere = new LambdaQueryWrapper<>();

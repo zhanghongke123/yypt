@@ -25,7 +25,7 @@ import java.util.Scanner;
 public class CodeGenerator {
 
     // 数据库 URL
-    private static final String URL = "jdbc:mysql://192.168.22.182:3306/yypt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://www.marcszhang.com:3306/marcs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     // 数据库驱动
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // 数据库用户名
@@ -63,11 +63,11 @@ public class CodeGenerator {
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.yypt")
-                            .moduleName("busi")
+                            .moduleName("system")
                             .entity("domain")
                             .service("service")
                             .serviceImpl("service.impl")
-                            .mapper("dao")
+                            .mapper("mapper")
                             .xml("mapper.xml")
                             .controller("controller");
 
@@ -81,7 +81,7 @@ public class CodeGenerator {
                             .controller(CONTROLLER_TEMPLATE_PATH);
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("erp_goods")
+                    builder.addInclude("sys_tenant")
                             .entityBuilder().enableLombok()
                             .controllerBuilder().enableRestStyle()
                             .serviceBuilder().formatServiceFileName("%sService").formatServiceImplFileName("%sServiceImpl");

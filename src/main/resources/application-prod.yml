@@ -73,7 +73,7 @@ spring:
         master:
           username: root
           password: 123456
-          url: jdbc:mysql://127.0.0.1:3306/yypt?serverTimezone=GMT%2B8&characterEncoding=utf8
+          url: jdbc:mysql://www.marcszhang.com:3306/marcs?serverTimezone=GMT%2B8&characterEncoding=utf8
           driver-class-name: com.mysql.cj.jdbc.Driver
 #          schema: db/schema.sql
           druid: #这里可以重写默认值

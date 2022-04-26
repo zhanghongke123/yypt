@@ -101,12 +101,12 @@ public class LoginController {
 
 
         //停用
-        if(sysUser.getStatus() == 0){
+        if("0".equals(sysUser.getStatus() )){
             return YyptResponse.failure(ResultEnum.USER_STOP);
         }
 
         //停用
-        if(sysUser.getStatus() == 2){
+        if("2".equals(sysUser.getStatus())){
             return YyptResponse.failure(ResultEnum.USER_LOCK);
         }
 

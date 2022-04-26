@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.yypt.common.annotation.Dict;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +20,7 @@ import java.util.List;
  */
 @TableName("sys_user")
 @Data
-public class SysUser {
+public class SysUser implements Serializable {
 
 
     @TableId(value = "user_id",type = IdType.AUTO)
@@ -50,7 +53,8 @@ public class SysUser {
 
 
     @TableField("sex")
-    private Integer sex;
+    @Dict
+    private String sex;
 
     /**
      * 部门名称
@@ -73,24 +77,31 @@ public class SysUser {
     @TableField("memo")
     private String memo;
 
+    @TableField("tenant_id")
+    private String tenantId;
+
+
 
     /**
      * 人员状态 0停用  1正常  2 锁定
      */
     @TableField("status")
-    private Long status;
+    @Dict
+    private String status;
 
-    @TableField("create_date")
-    private Date  createDate;
+    @TableField("create_time")
+    private LocalDateTime createTime;
 
-    @TableField("modify_date")
-    private  Date modifyDate;
+    @TableField("update_time")
+    private  LocalDateTime updateTime;
 
     /**
      * 锁定日期
      */
-    @TableField("lock_date")
-    private Date lockDate;
+    @TableField("lock_time")
+    private LocalDateTime lockDate;
+
+
     private transient List<SysRole> roleList;
 
 

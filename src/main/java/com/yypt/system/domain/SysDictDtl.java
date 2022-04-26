@@ -28,7 +28,7 @@ public class SysDictDtl implements Serializable {
 
     private String label;
 
-    private Integer value;
+    private String value;
 
     private String memo;
 
